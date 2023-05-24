@@ -13,8 +13,8 @@ var cMaxx;
 var bWidth;
 var bHeight;
 var bStart;
-var dx;
-var dy;
+var vector;
+var velocity;
 var ROWS;
 var COLS;
 var bricWidth;
@@ -24,7 +24,7 @@ var bricks;
 var r;
 var c;
 var N;
-var level = 2;
+var level = 1;
 var background = new Image();
 background.src = "background.avif"
 var gameoverimg = new Image();
@@ -41,7 +41,7 @@ var mission = new Image();
 mission.src = "missioncomplete.jpeg";
 
 $(document).ready(function(){
-	init(5, 2, 200, 2);
+	init(5, 200, 2);
 	PLAY = setInterval(draw, 5);
 	TIME = setInterval(setTime, 1000);
 	$(document).mousemove(function(e){
@@ -50,19 +50,23 @@ $(document).ready(function(){
 		}
 	})
 })
-function init(rad, vec, width, num){
+function init(rad, width, num){
 	init_backGround();
 	if (level == 1) {
 		init_drawBrick_lvl1(num);
+		velocity = 1;	// 단계별로 초기 공 속도 설정
+		//width = ?;	// 단계별로 초기 바 크기 설정
 	}
 	else if (level == 2) {
 		init_drawBrick_lvl2(num);
+		velocity = 2;	// 단계별로 초기 공 속도 설정
+		//width = ?;	// 단계별로 초기 바 크기 설정
 	}
 	/*else if (level == 3) {
 		init_drawBrick_lvl3(num);
 	}*/
 	init_drawBar(width);
-	init_drawBall(rad, vec);
+	init_drawBall(rad);
 }
 function init_backGround(){
 	context = $("#myCanvas")[0].getContext('2d');
@@ -79,8 +83,8 @@ function draw(){
 	drawBrick();
 	drawTimenScore();
 	ballReflection();
-	ballX += dx;
-	ballY += dy;
+	ballX += velocity*vector[0];
+	ballY += velocity*vector[1];
 
 	var all = true;
 	for(i = 0;i<N;i++){
@@ -100,16 +104,14 @@ function draw(){
 
 function ballReflection() {
 	if(ballX < ballRadius || ballX > cWidth - ballRadius){
-		dx = -dx;
+		vector[0] = -vector[0];
 	}
 	if(ballY < ballRadius){
-		dy = -dy;
+		vector[1] = -vector[1];
 	}else if(ballY > cHeight - ballRadius){
 		if(ballX > bStart && ballX < bStart + bWidth){
 			var alpha = ((bStart + (bWidth/2)) - ballX) / (bWidth / 2) * 0.3; //왼쪽: 양수, 오른쪽: 음수
-			var vector = barReflection(dx, dy, alpha);
-			dx = vector[0];
-			dy = -vector[1];
+			barReflection(alpha);
 			ballY = cHeight - ballRadius
 		}else{
 			endPlay(gameoverimg);
@@ -120,51 +122,48 @@ function ballReflection() {
 
 function brickReflection() {
 	var row = Math.floor((ballY)/(bricHeight+bricPadding));
-	var col = Math.floor((ballX + dx)/(bricWidth+bricPadding));
+	var col = Math.floor((ballX + velocity*vector[0])/(bricWidth+bricPadding));
 
 	if(row < ROWS) {
 		if(bricks[row][col] >= 1){
-			dx = -dx;
+			vector[0] = -vector[0]
 			score++;
 			bricks[row][col] -= 1;
 		}else if(bricks[row][col] == -1){
-			dx = -dx;
+			vector[0] = -vector[0];
 			score++;
 			bricks[row][col] = 0;
 		}
 	}
 
-	row = Math.floor((ballY + dy)/(bricHeight+bricPadding));
+	row = Math.floor((ballY + velocity*vector[1])/(bricHeight+bricPadding));
 	col = Math.floor((ballX)/(bricWidth+bricPadding));
 
 	if(row < ROWS) {
 		if(bricks[row][col] >= 1){
-			dy = -dy;
+			vector[1] = -vector[1];
 			score++;
 			bricks[row][col] -= 1;
 		}else if(bricks[row][col] == -1){
-			dy = -dy;
+			vector[1] = -vector[1];
 			score++;
 			bricks[row][col] = 0;
 		}
 	}
 }
 
-function barReflection(dx, dy, alpha) {
-	if (dx >= 0) {
-		var velocity = Math.sqrt(((dy*dy) + (dx*dx)));
-		var angle = Math.atan(dy/dx);
+function barReflection(alpha) {
+	if (vector[0] >= 0) {
+		var angle = Math.atan(vector[1]/vector[0]);
 		angle = angle * (1 + alpha);
-		var vector = [ velocity * Math.cos(angle), velocity * Math.sin(angle) ];
+		vector = [ Math.cos(angle), -Math.sin(angle) ];
 	}
 	else {
-		dx = -dx
-		var velocity = Math.sqrt(((dy*dy) + (dx*dx)));
-		var angle = Math.atan(dy/dx);
+		vector[0] = -vector[0]
+		var angle = Math.atan(vector[1]/vector[0]);
 		angle = angle * (1 - alpha);
-		var vector = [ -velocity * Math.cos(angle), velocity * Math.sin(angle) ];
+		vector = [ -Math.cos(angle), -Math.sin(angle) ];
 	}
-	return vector;
 }
 
 function endPlay(img){
@@ -188,12 +187,11 @@ function drawTimenScore(){
 	context.font = "20px Georgia";
 	context.fillText(timer,cWidth - 50, cHeight - 50);
 }
-function init_drawBall(rad, vec) {
+function init_drawBall(rad) {
 	ballRadius = rad;
 	ballX = 100;
 	ballY = ROWS*bricHeight + 50;
-	dx = vec;
-	dy = vec;
+	vector = [Math.sqrt(0.5), Math.sqrt(0.5)];
 }
 function drawBall(){
 	context.fillStyle = "white";
