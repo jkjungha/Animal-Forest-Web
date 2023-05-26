@@ -21,10 +21,9 @@ var bricWidth;
 var bricHeight;
 var bricPadding;
 var bricks;
-var r;
-var c;
-var N;
-var level = 1;
+var level = 3;
+var coreHit;
+var crHit;
 var background = new Image();
 background.src = "background.avif"
 var gameoverimg = new Image();
@@ -41,7 +40,7 @@ var mission = new Image();
 mission.src = "missioncomplete.jpeg";
 
 $(document).ready(function(){
-	init(5, 200, 2);
+	init(5, 200);
 	PLAY = setInterval(draw, 5);
 	TIME = setInterval(setTime, 1000);
 	$(document).mousemove(function(e){
@@ -50,21 +49,29 @@ $(document).ready(function(){
 		}
 	})
 })
-function init(rad, width, num){
+function init(rad, width){
 	init_backGround();
 	if (level == 1) {
-		init_drawBrick_lvl1(num);
-		velocity = 1;	// 단계별로 초기 공 속도 설정
+		init_drawBrick_lvl1();
+		velocity = 1.5;	// 단계별로 초기 공 속도 설정
+		crHit = 0;
+		coreHit = 3;
 		//width = ?;	// 단계별로 초기 바 크기 설정
 	}
 	else if (level == 2) {
-		init_drawBrick_lvl2(num);
+		init_drawBrick_lvl2();
 		velocity = 2;	// 단계별로 초기 공 속도 설정
+		crHit = 0;
+		coreHit = 5;
 		//width = ?;	// 단계별로 초기 바 크기 설정
 	}
-	/*else if (level == 3) {
-		init_drawBrick_lvl3(num);
-	}*/
+	else if (level == 3) {
+		init_drawBrick_lvl3();
+		velocity = 2.5;	// 단계별로 초기 공 속도 설정
+		crHit = 0;
+		coreHit = 7;
+		//width = ?;	// 단계별로 초기 바 크기 설정
+	}
 	init_drawBar(width);
 	init_drawBall(rad);
 }
@@ -86,17 +93,7 @@ function draw(){
 	ballX += velocity*vector[0];
 	ballY += velocity*vector[1];
 
-	var all = true;
-	for(i = 0;i<N;i++){
-		var ri = r[i];
-		var ci = c[i];
-		if(bricks[ri][ci] == -1){
-			all = false;
-			break;
-		}
-	}
-
-	if(all || timer == 0){
+	if((coreHit <= crHit) || timer == 0){
 		endPlay(mission);
 	}
 
@@ -125,14 +122,34 @@ function brickReflection() {
 	var col = Math.floor((ballX + velocity*vector[0])/(bricWidth+bricPadding));
 
 	if(row < ROWS) {
-		if(bricks[row][col] >= 1){
-			vector[0] = -vector[0]
-			score++;
-			bricks[row][col] -= 1;
-		}else if(bricks[row][col] == -1){
+		if (bricks[row][col] != 0) {
 			vector[0] = -vector[0];
-			score++;
+		}
+		if(bricks[row][col] >= 1){
+			score += 10;
+			bricks[row][col] -= 1;
+		}
+		else if(bricks[row][col] == -1){
+			score += 100;
 			bricks[row][col] = 0;
+		}
+		else if(bricks[row][col] == -2){
+			bricks[row][col] = 0;
+			var event = Math.floor(Math.random()*3);
+			if (event == 0) {
+				bWidth -= 10;
+			}
+			else if (event == 1) {
+				velocity += 0.5;
+			}
+			else if (event == 2) {
+				TIME -= 5;
+			}
+		}
+		else if(bricks[row][col] == -3){
+			vector[0] = -vector[0];
+			crHit += 1;
+			score += 5;
 		}
 	}
 
@@ -140,14 +157,33 @@ function brickReflection() {
 	col = Math.floor((ballX)/(bricWidth+bricPadding));
 
 	if(row < ROWS) {
+		if (bricks[row][col] != 0) {
+			vector[1] = -vector[1];
+		}
 		if(bricks[row][col] >= 1){
-			vector[1] = -vector[1];
-			score++;
+			score += 10;
 			bricks[row][col] -= 1;
-		}else if(bricks[row][col] == -1){
-			vector[1] = -vector[1];
-			score++;
+		}
+		else if(bricks[row][col] == -1){
+			score += 100;
 			bricks[row][col] = 0;
+		}
+		else if(bricks[row][col] == -2){
+			bricks[row][col] = 0;
+			var event = Math.floor(Math.random()*3);
+			if (event == 0) {
+				bWidth -= 10;
+			}
+			else if (event == 1) {
+				velocity += 0.5;
+			}
+			else if (event == 2) {
+				TIME -= 5;
+			}
+		}
+		else if(bricks[row][col] == -3){
+			crHit += 1;
+			score += 5;
 		}
 	}
 }
@@ -210,63 +246,159 @@ function drawBar(){
 	context.beginPath();
 	context.fillRect(bStart, cHeight- bHeight, bWidth, bHeight);
 }
-function init_drawBrick_lvl1(num){
+function init_drawBrick_lvl1(){
 	ROWS = 3;
 	COLS = 4;
 	bricPadding = 5;
 	bricWidth = (cWidth / COLS);
 	bricHeight = bricWidth/3;
 
+	scoreBrickCount = 3;
+	deburfBrickCount = 0;
+	doubleBrickCount = 0;
+	tripleBrickCount = 0;
+
 	bricks = new Array(ROWS);
-	for(i=0;i<ROWS;i++){
+
+	for (i=0;i<ROWS;i++) {
 		bricks[i] = new Array(COLS);
-		for(j=0;j<COLS;j++){
+		for(j=0;j<COLS;j++) {
 			bricks[i][j] = 1;
 		}
 	}
-	N = num;
-	r = new Array(N);
-	c = new Array(N);
 
-	for(i=0;i<N;i++){
+	bricks[0][COLS/2] = -3;
+	bricks[0][COLS/2 - 1] = -3;
+	bricks[1][COLS/2] = -3;
+	bricks[1][COLS/2 - 1] = -3;
+
+	for (i = 0 ; i < scoreBrickCount ; i++){
 		var ri = Math.floor(Math.random()*ROWS);
 		var ci = Math.floor(Math.random()*COLS);
-		if(bricks[ri][ci] != -1){
-			r[i] = ri;
-			c[i] = ci;
+		if (bricks[ri][ci] == 1) {
 			bricks[ri][ci] = -1;
-		}else {
+		}
+		else {
 			i--;
 		}
 	}
 }
 
-function init_drawBrick_lvl2(num){
-	ROWS = 3;
-	COLS = 4;
+function init_drawBrick_lvl2(){
+	ROWS = 4;
+	COLS = 6;
 	bricPadding = 5;
 	bricWidth = (cWidth / COLS);
 	bricHeight = bricWidth/3;
 
+	scoreBrickCount = 7;
+	deburfBrickCount = 0;
+	doubleBrickCount = 8;
+	tripleBrickCount = 0;
+
 	bricks = new Array(ROWS);
-	for(i=0;i<ROWS;i++){
+
+	for (i=0;i<ROWS;i++) {
 		bricks[i] = new Array(COLS);
-		for(j=0;j<COLS;j++){
-			bricks[i][j] = 3;
+		for(j=0;j<COLS;j++) {
+			bricks[i][j] = 1;
 		}
 	}
-	N = num;
-	r = new Array(N);
-	c = new Array(N);
 
-	for(i=0;i<N;i++){
+	bricks[0][COLS/2] = -3;
+	bricks[0][COLS/2 - 1] = -3;
+	bricks[1][COLS/2] = -3;
+	bricks[1][COLS/2 - 1] = -3;
+
+	for (i = 0 ; i < scoreBrickCount ; i++){
 		var ri = Math.floor(Math.random()*ROWS);
 		var ci = Math.floor(Math.random()*COLS);
-		if(bricks[ri][ci] != -1){
-			r[i] = ri;
-			c[i] = ci;
+		if (bricks[ri][ci] == 1) {
 			bricks[ri][ci] = -1;
-		}else {
+		}
+		else {
+			i--;
+		}
+	}
+
+	for (i = 0 ; i < doubleBrickCount ; i++){
+		var ri = Math.floor(Math.random()*ROWS);
+		var ci = Math.floor(Math.random()*COLS);
+		if (bricks[ri][ci] == 1) {
+			bricks[ri][ci] = 2;
+		}
+		else {
+			i--;
+		}
+	}
+}
+
+function init_drawBrick_lvl3(){
+	ROWS = 6;
+	COLS = 8;
+	bricPadding = 5;
+	bricWidth = (cWidth / COLS);
+	bricHeight = bricWidth/3;
+
+	scoreBrickCount = 9;
+	deburfBrickCount = 5;
+	doubleBrickCount = 10;
+	tripleBrickCount = 6;
+
+	bricks = new Array(ROWS);
+
+	for (i=0;i<ROWS;i++) {
+		bricks[i] = new Array(COLS);
+		for(j=0;j<COLS;j++) {
+			bricks[i][j] = 1;
+		}
+	}
+
+	bricks[0][COLS/2] = -3;
+	bricks[0][COLS/2 - 1] = -3;
+	bricks[1][COLS/2] = -3;
+	bricks[1][COLS/2 - 1] = -3;
+
+	for (i = 0 ; i < scoreBrickCount ; i++){
+		var ri = Math.floor(Math.random()*ROWS);
+		var ci = Math.floor(Math.random()*COLS);
+		if (bricks[ri][ci] == 1) {
+			bricks[ri][ci] = -1;
+		}
+		else {
+			i--;
+		}
+	}
+
+	for (i = 0 ; i < doubleBrickCount ; i++){
+		var ri = Math.floor(Math.random()*ROWS);
+		var ci = Math.floor(Math.random()*COLS);
+		if (bricks[ri][ci] == 1) {
+			bricks[ri][ci] = 2;
+		}
+		else {
+			i--;
+		}
+	}
+
+	for (i = 0 ; i < tripleBrickCount ; i++){
+		var ri = Math.floor(Math.random()*ROWS);
+		var ci = Math.floor(Math.random()*COLS);
+		if (bricks[ri][ci] == 1) {
+			bricks[ri][ci] = 3;
+		}
+		else {
+			i--;
+		} 
+	}
+
+	for (i = 0 ; i < deburfBrickCount ; i++){
+		var ri = Math.floor(Math.random()*ROWS);
+		var ci = Math.floor(Math.random()*COLS);
+		if (bricks[ri][ci] == 1) {
+			bricks[ri][ci] = -2;
+		}
+		else {
 			i--;
 		}
 	}
