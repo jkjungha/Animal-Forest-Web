@@ -22,6 +22,7 @@ var L3S1=-1;
 var L3S2=-1;
 var L3S3=-1;
 //---------> 디자인
+var myCanvas;
 var context;
 var ballX;
 var ballY;
@@ -161,6 +162,8 @@ $(document).ready(function(){
 			hidePage= ".stagePage";
 			showPage = "#EasyStage2Game";
 			move_to_NextPage();
+			myCanvas = $("#myCanvas1-2");
+			START();
 		}
 	});
 	$("#easyStage3").on("click", function(){
@@ -170,6 +173,8 @@ $(document).ready(function(){
 			hidePage= ".stagePage";
 			showPage = "#EasyStage3Game";
 			move_to_NextPage();
+			myCanvas = $("#myCanvas1-3");
+			START();
 		}
 	});
 
@@ -193,6 +198,8 @@ $(document).ready(function(){
 		hidePage= "#EasyStory1-3";
 		showPage = "#EasyStage1Game";
 		move_to_NextPage();
+		myCanvas = $("#myCanvas1-1");
+		START();
 	});
 
 
@@ -215,6 +222,8 @@ $(document).ready(function(){
 			hidePage= ".stagePage";
 			showPage = "#MediumStage2Game";
 			move_to_NextPage();
+			myCanvas = $("#myCanvas2-2");
+			START();
 		}
 	});
 	$("#mediumStage3").on("click", function(){
@@ -224,6 +233,8 @@ $(document).ready(function(){
 			hidePage= ".stagePage";
 			showPage = "#MediumStage3Game";
 			move_to_NextPage();
+			myCanvas = $("#myCanvas2-3");
+			START();
 		}
 	});
 
@@ -246,6 +257,8 @@ $(document).ready(function(){
 		hidePage= "#MediumStory1-2";
 		showPage = "#MediumStage1Game";
 		move_to_NextPage();
+		myCanvas = $("#myCanvas2-1");
+		START();
 		
 	});
 
@@ -268,6 +281,8 @@ $(document).ready(function(){
 			hidePage= ".stagePage";
 			showPage = "#HardStage2Game";
 			move_to_NextPage();
+			myCanvas = $("#myCanvas3-2");
+			START();
 		}
 	});
 
@@ -278,6 +293,8 @@ $(document).ready(function(){
 			hidePage= ".stagePage";
 			showPage = "#HardStage3Game";
 			move_to_NextPage();
+			myCanvas = $("#myCanvas3-3");
+			START();
 		}
 	});
 
@@ -291,6 +308,8 @@ $(document).ready(function(){
 		hidePage= "#HardStory1-1";
 		showPage = "#HardStage1Game";
 		move_to_NextPage();
+		myCanvas = $("#myCanvas3-1");
+		START();
 	});
 	$("#goodButton").mouseover(function(){
 		$("#goodButton").attr("src", "goodButton_mo.png");
@@ -375,15 +394,17 @@ $(document).ready(function(){
 	});
 	//--------> 디자인
   
-	init(5, 200);
-	PLAY = setInterval(draw, 5);
-	TIME = setInterval(setTime, 1000);
 	$(document).mousemove(function(e){
 		if(e.pageX >= cMinx && e.pageX <= cMaxx){
 			bStart = e.pageX - cMinx - (bWidth/2);
 		}
 	})
 })
+function START(){
+	init(5, 200);
+	PLAY = setInterval(draw, 5);
+	TIME = setInterval(setTime, 1000);
+}
 
 function move_to_NextPage(){
 	$(hidePage).fadeOut(0);
@@ -731,10 +752,10 @@ function init(rad, width){
 	init_drawBall(rad);
 }
 function init_backGround(){
-	context = $("#myCanvas")[0].getContext('2d');
-	cWidth = $("#myCanvas").width();
-	cHeight = $("#myCanvas").height();
-	cMinx = $("#myCanvas").offset().left;
+	context = myCanvas[0].getContext('2d');
+	cWidth = myCanvas.width();
+	cHeight = myCanvas.height();
+	cMinx = myCanvas.offset().left;
 	cMaxx = cMinx + cWidth;
 }
 function draw(){
