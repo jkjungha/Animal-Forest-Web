@@ -730,22 +730,22 @@ function init(rad, width){
 	if (level == 1) {
 		init_drawBrick_lvl1();
 		velocity = 1.5;	// 단계별로 초기 공 속도 설정
-		crHit = 0;
-		coreHit = 3;
+		crHit = 0;		// 유저가 코어 맞춘 횟수 초기화
+		coreHit = 3;	// 코어벽돌을 맞춰야하는 횟수
 		//width = ?;	// 단계별로 초기 바 크기 설정
 	}
 	else if (level == 2) {
 		init_drawBrick_lvl2();
 		velocity = 2;	// 단계별로 초기 공 속도 설정
-		crHit = 0;
-		coreHit = 5;
+		crHit = 0;		// 유저가 코어 맞춘 횟수 초기화
+		coreHit = 5;	// 코어벽돌을 맞춰야하는 횟수
 		//width = ?;	// 단계별로 초기 바 크기 설정
 	}
 	else if (level == 3) {
 		init_drawBrick_lvl3();
 		velocity = 2.5;	// 단계별로 초기 공 속도 설정
-		crHit = 0;
-		coreHit = 7;
+		crHit = 0;		// 유저가 코어 맞춘 횟수 초기화
+		coreHit = 7;	// 코어벽돌을 맞춰야하는 횟수
 		//width = ?;	// 단계별로 초기 바 크기 설정
 	}
 	init_drawBar(width);
@@ -783,7 +783,7 @@ function ballReflection() {
 		vector[1] = -vector[1];
 	}else if(ballY > cHeight - ballRadius){
 		if(ballX > bStart && ballX < bStart + bWidth){
-			var alpha = ((bStart + (bWidth/2)) - ballX) / (bWidth / 2) * 0.3; //왼쪽: 양수, 오른쪽: 음수
+			var alpha = ((bStart + (bWidth/2)) - ballX) / (bWidth / 2) * 0.5; //왼쪽: 양수, 오른쪽: 음수
 			barReflection(alpha);
 			ballY = cHeight - ballRadius
 		}else{
@@ -868,12 +868,18 @@ function barReflection(alpha) {
 	if (vector[0] >= 0) {
 		var angle = Math.atan(vector[1]/vector[0]);
 		angle = angle * (1 + alpha);
+		if (Math.abs(angle) < Math.PI/6) {
+			angle = Math.PI/6
+		}
 		vector = [ Math.cos(angle), -Math.sin(angle) ];
 	}
 	else {
 		vector[0] = -vector[0]
 		var angle = Math.atan(vector[1]/vector[0]);
 		angle = angle * (1 - alpha);
+		if (Math.abs(angle) < Math.PI/6) {
+			angle = Math.PI/6
+		}
 		vector = [ -Math.cos(angle), -Math.sin(angle) ];
 	}
 }
@@ -1090,6 +1096,8 @@ function drawBrick(){
 			}else if(bricks[i][j] == 1){
 				context.drawImage(brick1, j*bricWidth, i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
 			}else if(bricks[i][j] == -1){
+				context.drawImage(coffee, j*bricWidth+(bricWidth-bricHeight)/2, i*bricHeight, bricHeight - bricPadding, bricHeight - bricPadding);
+			}else if(bricks[i][j] == -2){
 				context.drawImage(coffee, j*bricWidth+(bricWidth-bricHeight)/2, i*bricHeight, bricHeight - bricPadding, bricHeight - bricPadding);
 			}
 		}
