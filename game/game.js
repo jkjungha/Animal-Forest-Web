@@ -50,22 +50,21 @@ var level = 3;
 var coreHit;
 var crHit;
 var background = new Image();
-background.src = "background.avif"
 var gameoverimg = new Image();
 gameoverimg.src = "gameover.avif";
 var brick1 = new Image();
-brick1.src = "brick1.jpeg";
+brick1.src = "brick1.png";
 var brick2 = new Image();
 brick2.src = "brick2.png";
 var brick3 = new Image();
 brick3.src = "brick3.png";
-var coffee = new Image();
-coffee.src = "coffee.png";
+var present = new Image();
+present.src = "present.png";
 var mission = new Image();
 mission.src = "missioncomplete.jpeg";
 
 $(document).ready(function(){
-  
+
 	/******************************/
 	/**********시작화면************/
 	/*****************************/
@@ -163,6 +162,7 @@ $(document).ready(function(){
 			showPage = "#EasyStage2Game";
 			move_to_NextPage();
 			myCanvas = $("#myCanvas1-2");
+			background.src = "background1-2.jpeg";
 			START();
 		}
 	});
@@ -174,6 +174,7 @@ $(document).ready(function(){
 			showPage = "#EasyStage3Game";
 			move_to_NextPage();
 			myCanvas = $("#myCanvas1-3");
+			background.src = "background1-3.jpeg";
 			START();
 		}
 	});
@@ -199,6 +200,7 @@ $(document).ready(function(){
 		showPage = "#EasyStage1Game";
 		move_to_NextPage();
 		myCanvas = $("#myCanvas1-1");
+		background.src = "background1-1.jpeg";
 		START();
 	});
 
@@ -223,6 +225,7 @@ $(document).ready(function(){
 			showPage = "#MediumStage2Game";
 			move_to_NextPage();
 			myCanvas = $("#myCanvas2-2");
+			background.src = "background2-2.jpeg";
 			START();
 		}
 	});
@@ -234,6 +237,7 @@ $(document).ready(function(){
 			showPage = "#MediumStage3Game";
 			move_to_NextPage();
 			myCanvas = $("#myCanvas2-3");
+			background.src = "background2-3.jpeg";
 			START();
 		}
 	});
@@ -258,6 +262,7 @@ $(document).ready(function(){
 		showPage = "#MediumStage1Game";
 		move_to_NextPage();
 		myCanvas = $("#myCanvas2-1");
+		background.src = "background2-1.jpeg";
 		START();
 		
 	});
@@ -282,6 +287,7 @@ $(document).ready(function(){
 			showPage = "#HardStage2Game";
 			move_to_NextPage();
 			myCanvas = $("#myCanvas3-2");
+			background.src = "background3-2.jpeg";
 			START();
 		}
 	});
@@ -294,6 +300,7 @@ $(document).ready(function(){
 			showPage = "#HardStage3Game";
 			move_to_NextPage();
 			myCanvas = $("#myCanvas3-3");
+			background.src = "background3-3.jpeg";
 			START();
 		}
 	});
@@ -309,6 +316,7 @@ $(document).ready(function(){
 		showPage = "#HardStage1Game";
 		move_to_NextPage();
 		myCanvas = $("#myCanvas3-1");
+		background.src = "background3-1.jpeg";
 		START();
 	});
 	$("#goodButton").mouseover(function(){
@@ -393,7 +401,7 @@ $(document).ready(function(){
 		move_to_NextPage();
 	});
 	//--------> 디자인
-  
+
 	$(document).mousemove(function(e){
 		if(e.pageX >= cMinx && e.pageX <= cMaxx){
 			bStart = e.pageX - cMinx - (bWidth/2);
@@ -725,7 +733,7 @@ function set_stage3Clear(){
 }
 //------> 디자인
 function init(rad, width){
-  
+
 	init_backGround();
 	if (level == 1) {
 		init_drawBrick_lvl1();
@@ -1096,9 +1104,9 @@ function drawBrick(){
 			}else if(bricks[i][j] == 1){
 				context.drawImage(brick1, j*bricWidth, i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
 			}else if(bricks[i][j] == -1){
-				context.drawImage(coffee, j*bricWidth+(bricWidth-bricHeight)/2, i*bricHeight, bricHeight - bricPadding, bricHeight - bricPadding);
+				context.drawImage(present, j*bricWidth+(bricWidth-bricHeight)/2, i*bricHeight, bricHeight - bricPadding, bricHeight - bricPadding);
 			}else if(bricks[i][j] == -2){
-				context.drawImage(coffee, j*bricWidth+(bricWidth-bricHeight)/2, i*bricHeight, bricHeight - bricPadding, bricHeight - bricPadding);
+				context.drawImage(present, j*bricWidth+(bricWidth-bricHeight)/2, i*bricHeight, bricHeight - bricPadding, bricHeight - bricPadding);
 			}
 		}
 	}
