@@ -31,6 +31,8 @@ var score = 0;
 var timer = 100;
 var TIME;
 var PLAY;
+var GAMEDELAY;
+var delayTime;
 var cWidth;
 var cHeight;
 var cMinx;
@@ -414,8 +416,11 @@ $(document).ready(function(){
 })
 function START(){
 	init();
+	draw();
+	delayTime = 3;
 	PLAY = setInterval(draw, 5);
 	TIME = setInterval(setTime, 1000);
+	GAMEDELAY = setInterval(delay, 1000);
 }
 
 function move_to_NextPage(){
@@ -737,7 +742,6 @@ function set_stage3Clear(){
 }
 //------> 디자인
 function init(){
-
 	init_backGround();
 	if (stage == 1) {
 		init_drawBrick_lvl1();
@@ -770,7 +774,7 @@ function init(){
 		init_drawBall(20);
 	}
 }
-function init_backGround(){
+function init_backGround() {
 	context = myCanvas[0].getContext('2d');
 	cWidth = myCanvas.width();
 	cHeight = myCanvas.height();
@@ -785,9 +789,10 @@ function draw(){
 	drawBrick();
 	drawTimenScore();
 	ballReflection();
-	ballX += velocity*vector[0];
-	ballY += velocity*vector[1];
-
+	if (delayTime == 0) {
+		ballX += velocity*vector[0];
+		ballY += velocity*vector[1];
+	}
 	if((coreHit <= crHit) || timer == 0){
 		endPlay(background);
 	}
@@ -905,6 +910,13 @@ function barReflection(alpha) {
 	}
 }
 
+function delay() {
+	delayTime -= 1;
+	if (delayTime == 0) {
+		clearInterval(GAMEDELAY);
+	}
+}
+
 function endPlay(img){
 	clearInterval(PLAY);
 	clearInterval(TIME);
@@ -916,7 +928,9 @@ function endPlay(img){
 }
 
 function setTime(){
-	--timer;
+	if (delayTime == 0) {
+		--timer;
+	}
 }
 
 function drawTimenScore(){
@@ -925,6 +939,11 @@ function drawTimenScore(){
 	context.fillText(score, cWidth - 50, cHeight - 100);
 	context.font = "20px Georgia";
 	context.fillText(timer,cWidth - 50, cHeight - 50);
+	if (delayTime != 0) {
+		context.font = "80px Georgia";
+		context.fillStyle = "white";
+		context.fillText(delayTime, cWidth/2 - 20, cHeight/2 - 50);
+	}
 }
 function init_drawBall(rad) {
 	ballRadius = rad;
