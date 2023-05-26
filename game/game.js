@@ -809,17 +809,17 @@ function ballReflection() {
 			endPlay(gameoverimg);
 		}
 	}
-	if(ballX  >= w && ballY  >= h){
+	if(ballX + ballRadius  >= w && ballY + ballRadius >= h){
 		brickReflection();
 	}
 }
 
 function brickReflection() {
-	var row = Math.floor((ballY - h)/bricHeight);
-	var col = Math.floor((ballX - w + velocity*vector[0])/bricWidth);
+	var row = Math.floor((ballY + ballRadius - h)/bricHeight);
+	var col = Math.floor((ballX + ballRadius - w + velocity*vector[0])/bricWidth);
 	
 
-	if(row < ROWS) {
+	if(row < ROWS && col < COLS) {
 		if (bricks[row][col] != 0) {
 			vector[0] = -vector[0];
 		}
@@ -851,11 +851,11 @@ function brickReflection() {
 		}
 	}
 
-	row = Math.floor((ballY - h + velocity*vector[1])/bricHeight);
-	col = Math.floor((ballX - w)/bricWidth);
+	row = Math.floor((ballY + ballRadius - h + velocity*vector[1])/bricHeight);
+	col = Math.floor((ballX + ballRadius - w)/bricWidth);
 	
 
-	if(row < ROWS) {
+	if(row < ROWS && col < COLS) {
 		if (bricks[row][col] != 0) {
 			vector[1] = -vector[1];
 		}
@@ -930,8 +930,8 @@ function drawTimenScore(){
 }
 function init_drawBall(rad) {
 	ballRadius = rad;
-	ballX = 100 + ballRadius;
-	ballY = ROWS*bricHeight + h + 20 + ballRadius;
+	ballX = bStart + bWidth/2;
+	ballY = cHeight - ballRadius - bHeight - 20;
 	vector = [Math.sqrt(0.5), Math.sqrt(0.5)];
 }
 function drawBall(){
