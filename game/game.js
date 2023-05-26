@@ -802,7 +802,7 @@ function ballReflection() {
 		vector[1] = -vector[1];
 	}else if(ballY > cHeight - ballRadius){
 		if(ballX > bStart && ballX < bStart + bWidth){
-			var alpha = ((bStart + (bWidth/2)) - ballX) / (bWidth / 2) * 0.5; //왼쪽: 양수, 오른쪽: 음수
+			var alpha = ((bStart + (bWidth/2)) - ballX) / (bWidth / 2) * 0.8; //왼쪽: 양수, 오른쪽: 음수
 			barReflection(alpha);
 			ballY = cHeight - ballRadius
 		}else{
@@ -817,9 +817,8 @@ function ballReflection() {
 function brickReflection() {
 	var row = Math.floor((ballY + ballRadius - h)/bricHeight);
 	var col = Math.floor((ballX + ballRadius - w + velocity*vector[0])/bricWidth);
-	
 
-	if(row < ROWS && col < COLS) {
+	if(row < ROWS && col < COLS && (row >= 0 && col >= 0)) {
 		if (bricks[row][col] != 0) {
 			vector[0] = -vector[0];
 		}
@@ -845,7 +844,6 @@ function brickReflection() {
 			}
 		}
 		else if(bricks[row][col] == -3){
-			vector[0] = -vector[0];
 			crHit += 1;
 			score += 5;
 		}
@@ -855,7 +853,7 @@ function brickReflection() {
 	col = Math.floor((ballX + ballRadius - w)/bricWidth);
 	
 
-	if(row < ROWS && col < COLS) {
+	if(row < ROWS && col < COLS && (row >= 0 && col >= 0)) {
 		if (bricks[row][col] != 0) {
 			vector[1] = -vector[1];
 		}
