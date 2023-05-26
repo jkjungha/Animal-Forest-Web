@@ -44,6 +44,8 @@ var ROWS;
 var COLS;
 var bricWidth;
 var bricHeight;
+var w;
+var h;
 var bricPadding;
 var bricks;
 var level = 3;
@@ -174,7 +176,7 @@ $(document).ready(function(){
 			showPage = "#EasyStage3Game";
 			move_to_NextPage();
 			myCanvas = $("#myCanvas1-3");
-			background.src = "background1-3.jpeg";
+			background.src = "background1-3.png";
 			START();
 		}
 	});
@@ -939,9 +941,11 @@ function drawBar(){
 function init_drawBrick_lvl1(){
 	ROWS = 3;
 	COLS = 4;
-	bricPadding = 5;
-	bricWidth = (cWidth / COLS);
-	bricHeight = bricWidth/3;
+	bricPadding = 10;
+	w = 100;
+	h = 120;
+	bricWidth = (cWidth - 2*w)/COLS;
+	bricHeight = (cHeight - 2*h - 300)/ROWS;
 
 	scoreBrickCount = 3;
 	deburfBrickCount = 0;
@@ -977,9 +981,11 @@ function init_drawBrick_lvl1(){
 function init_drawBrick_lvl2(){
 	ROWS = 4;
 	COLS = 6;
-	bricPadding = 5;
-	bricWidth = (cWidth / COLS);
-	bricHeight = bricWidth/3;
+	bricPadding = 10;
+	w = 100;
+	h = 120;
+	bricWidth = (cWidth - 2*w)/COLS;
+	bricHeight = (cHeight - 2*h - 300)/ROWS;
 
 	scoreBrickCount = 7;
 	deburfBrickCount = 0;
@@ -1026,9 +1032,11 @@ function init_drawBrick_lvl2(){
 function init_drawBrick_lvl3(){
 	ROWS = 6;
 	COLS = 8;
-	bricPadding = 5;
-	bricWidth = (cWidth / COLS);
-	bricHeight = bricWidth/3;
+	bricPadding = 10;
+	w = 100;
+	h = 120;
+	bricWidth = (cWidth - 2*w)/COLS;
+	bricHeight = (cHeight - 2*h - 50)/ROWS;
 
 	scoreBrickCount = 9;
 	deburfBrickCount = 5;
@@ -1098,15 +1106,15 @@ function drawBrick(){
 	for(i=0;i<ROWS;i++){
 		for(j=0;j<COLS;j++){
 			if(bricks[i][j] == 3){
-				context.drawImage(brick3, j*bricWidth, i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
+				context.drawImage(brick3, w+j*bricWidth, h+i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
 			}else if(bricks[i][j] == 2){
-				context.drawImage(brick2, j*bricWidth, i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
+				context.drawImage(brick2, w+j*bricWidth, h+i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
 			}else if(bricks[i][j] == 1){
-				context.drawImage(brick1, j*bricWidth, i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
+				context.drawImage(brick1, w+j*bricWidth, h+i*bricHeight,  bricWidth - bricPadding, bricHeight - bricPadding);
 			}else if(bricks[i][j] == -1){
-				context.drawImage(present, j*bricWidth+(bricWidth-bricHeight)/2, i*bricHeight, bricHeight - bricPadding, bricHeight - bricPadding);
+				context.drawImage(present, w+j*bricWidth, h+i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
 			}else if(bricks[i][j] == -2){
-				context.drawImage(present, j*bricWidth+(bricWidth-bricHeight)/2, i*bricHeight, bricHeight - bricPadding, bricHeight - bricPadding);
+				context.drawImage(present, w+j*bricWidth, h+i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
 			}
 		}
 	}
