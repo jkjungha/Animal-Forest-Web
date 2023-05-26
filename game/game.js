@@ -834,10 +834,10 @@ function brickReflection() {
 			bricks[row][col] = 0;
 			var event = Math.floor(Math.random()*3);
 			if (event == 0) {
-				bWidth -= 10;
+				bWidth -= 30;
 			}
 			else if (event == 1) {
-				velocity += 0.5;
+				velocity += 1;
 			}
 			else if (event == 2) {
 				TIME -= 5;
