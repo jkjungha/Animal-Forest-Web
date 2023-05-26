@@ -60,10 +60,12 @@ var brick2 = new Image();
 brick2.src = "brick2.png";
 var brick3 = new Image();
 brick3.src = "brick3.png";
+var corebrick = new Image();
+corebrick.src = "corebrick.png";
 var present = new Image();
 present.src = "present.png";
-var mission = new Image();
-mission.src = "missioncomplete.jpeg";
+var ball = new Image();
+ball.src = "peach.png";
 
 $(document).ready(function(){
 
@@ -411,7 +413,7 @@ $(document).ready(function(){
 	})
 })
 function START(){
-	init(5, 200);
+	init();
 	PLAY = setInterval(draw, 5);
 	TIME = setInterval(setTime, 1000);
 }
@@ -734,32 +736,39 @@ function set_stage3Clear(){
 	}
 }
 //------> 디자인
-function init(rad, width){
+function init(){
 
 	init_backGround();
-	if (level == 1) {
+	if (stage == 1) {
 		init_drawBrick_lvl1();
-		velocity = 1.5;	// 단계별로 초기 공 속도 설정
 		crHit = 0;		// 유저가 코어 맞춘 횟수 초기화
 		coreHit = 3;	// 코어벽돌을 맞춰야하는 횟수
-		//width = ?;	// 단계별로 초기 바 크기 설정
 	}
-	else if (level == 2) {
+	else if (stage == 2) {
 		init_drawBrick_lvl2();
-		velocity = 2;	// 단계별로 초기 공 속도 설정
 		crHit = 0;		// 유저가 코어 맞춘 횟수 초기화
 		coreHit = 5;	// 코어벽돌을 맞춰야하는 횟수
-		//width = ?;	// 단계별로 초기 바 크기 설정
 	}
-	else if (level == 3) {
+	else if (stage == 3) {
 		init_drawBrick_lvl3();
-		velocity = 2.5;	// 단계별로 초기 공 속도 설정
 		crHit = 0;		// 유저가 코어 맞춘 횟수 초기화
 		coreHit = 7;	// 코어벽돌을 맞춰야하는 횟수
-		//width = ?;	// 단계별로 초기 바 크기 설정
 	}
-	init_drawBar(width);
-	init_drawBall(rad);
+	if (Lv == 1) {
+		velocity = 1.5;	// 단계별로 초기 공 속도 설정
+		init_drawBar(400);	// 단계별로 초기 바 크기 설정
+		init_drawBall(20);
+	}
+	else if (Lv== 2) {
+		velocity = 2;	// 단계별로 초기 공 속도 설정
+		init_drawBar(300);	// 단계별로 초기 바 크기 설정
+		init_drawBall(20);
+	}
+	else if (Lv == 3) {
+		velocity = 2.5;	// 단계별로 초기 공 속도 설정
+		init_drawBar(200);	// 단계별로 초기 바 크기 설정
+		init_drawBall(20);
+	}
 }
 function init_backGround(){
 	context = myCanvas[0].getContext('2d');
@@ -780,7 +789,7 @@ function draw(){
 	ballY += velocity*vector[1];
 
 	if((coreHit <= crHit) || timer == 0){
-		endPlay(mission);
+		endPlay(background);
 	}
 
 }
@@ -800,12 +809,15 @@ function ballReflection() {
 			endPlay(gameoverimg);
 		}
 	}
-	brickReflection();
+	if(ballX  >= w && ballY  >= h){
+		brickReflection();
+	}
 }
 
 function brickReflection() {
-	var row = Math.floor((ballY)/(bricHeight+bricPadding));
-	var col = Math.floor((ballX + velocity*vector[0])/(bricWidth+bricPadding));
+	var row = Math.floor((ballY - h)/bricHeight);
+	var col = Math.floor((ballX - w + velocity*vector[0])/bricWidth);
+	
 
 	if(row < ROWS) {
 		if (bricks[row][col] != 0) {
@@ -839,8 +851,9 @@ function brickReflection() {
 		}
 	}
 
-	row = Math.floor((ballY + velocity*vector[1])/(bricHeight+bricPadding));
-	col = Math.floor((ballX)/(bricWidth+bricPadding));
+	row = Math.floor((ballY - h + velocity*vector[1])/bricHeight);
+	col = Math.floor((ballX - w)/bricWidth);
+	
 
 	if(row < ROWS) {
 		if (bricks[row][col] != 0) {
@@ -917,16 +930,12 @@ function drawTimenScore(){
 }
 function init_drawBall(rad) {
 	ballRadius = rad;
-	ballX = 100;
-	ballY = ROWS*bricHeight + 50;
+	ballX = 100 + ballRadius;
+	ballY = ROWS*bricHeight + h + 20 + ballRadius;
 	vector = [Math.sqrt(0.5), Math.sqrt(0.5)];
 }
 function drawBall(){
-	context.fillStyle = "white";
-	context.beginPath();
-	context.arc(ballX,ballY,ballRadius,0, 2.0*Math.PI, false);
-	context.closePath();
-	context.fill();
+	context.drawImage(ball, ballX - ballRadius, ballY - ballRadius, ballRadius*2, ballRadius*2);
 }
 function init_drawBar(width){
 	bWidth = width;
@@ -945,7 +954,7 @@ function init_drawBrick_lvl1(){
 	w = 100;
 	h = 120;
 	bricWidth = (cWidth - 2*w)/COLS;
-	bricHeight = (cHeight - 2*h - 300)/ROWS;
+	bricHeight = (cHeight - 2*h - 50)/ROWS;
 
 	scoreBrickCount = 3;
 	deburfBrickCount = 0;
@@ -985,7 +994,7 @@ function init_drawBrick_lvl2(){
 	w = 100;
 	h = 120;
 	bricWidth = (cWidth - 2*w)/COLS;
-	bricHeight = (cHeight - 2*h - 300)/ROWS;
+	bricHeight = (cHeight - 2*h - 50)/ROWS;
 
 	scoreBrickCount = 7;
 	deburfBrickCount = 0;
@@ -1118,4 +1127,7 @@ function drawBrick(){
 			}
 		}
 	}
+
+	context.drawImage(corebrick, w+(COLS/2-1)*bricWidth, h, bricWidth*2 - bricPadding, bricHeight*2 - bricPadding);
+
 }
