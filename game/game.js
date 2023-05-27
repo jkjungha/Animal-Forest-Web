@@ -72,6 +72,8 @@ var present = new Image();
 present.src = "present.png";
 var ball = new Image();
 ball.src = "peach.png";
+var ceiling = new Image();
+ceiling.src = "";
 
 $(document).ready(function(){
 	/******************************/
@@ -966,6 +968,7 @@ function draw(){
 	drawBall();
 	drawBar();
 	drawBrick();
+	drawCeiling();
 	drawTimenScore();
 	ballReflection();
 	if (delayTime == 0) {
@@ -992,6 +995,9 @@ function ballReflection() {
 		}else{
 			endPlay(gameoverimg);
 		}
+	}
+	if(ballY <= h){
+		vector[1] = -vector[1];
 	}
 	if(ballX + ballRadius  >= w && ballY + ballRadius >= h){
 		brickReflection();
@@ -1142,6 +1148,11 @@ function drawBar(){
 	context.fillStyle = "#CEA800";
 	context.beginPath();
 	context.fillRect(bStart, cHeight- bHeight, bWidth, bHeight);
+}
+function drawCeiling(){
+	context.fillStyle = "#603000";
+	context.beginPath();
+	context.fillRect(0, 0, cWidth, h);
 }
 function init_drawBrick_lvl1(){
 	ROWS = 3;
