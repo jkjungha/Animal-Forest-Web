@@ -3,9 +3,6 @@ var showPage="";
 
 var audio;
 
-var corePrint=0;
-var scorePrint=0;
-var timePrint=0;
 var star=0;
 
 var Lv=0;
@@ -31,8 +28,8 @@ var context;
 var ballX;
 var ballY;
 var ballRadius;
-var score = 0;
-var timer = 100;
+var score;
+var timer;
 var TIME;
 var PLAY;
 var GAMEDELAY;
@@ -54,7 +51,6 @@ var w;
 var h;
 var bricPadding;
 var bricks;
-var level = 3;
 var coreHit;
 var crHit;
 var background = new Image();
@@ -74,6 +70,10 @@ var ball = new Image();
 ball.src = "peach.png";
 var ceiling = new Image();
 ceiling.src = "";
+var scoreimg = new Image();
+scoreimg.src = "score.png";
+var settings = new Image();
+settings.src = "settings.png";
 
 $(document).ready(function(){
 	/******************************/
@@ -423,29 +423,7 @@ $(document).ready(function(){
 	/******************************/
 	/********결과창들 제어********/
 	/*****************************/
-	$(".clearButton").on("click", function(){
-		audio.pause();
-		scorePrint=Math.floor(Math.random() * 1000);
-		timePrint=Math.floor(Math.random() * 60);
-		corePrint=Math.floor(Math.random() * 2);
-
-
-		set_resultPage();
-
-		hidePage= ".gamePage";
-		showPage = "#resultPage";
-		move_to_NextPage();
-		audio.src="success.mp3";
-		audio.play();
-	});
-
-	$(".failButton").on("click", function(){
-		hidePage= ".gamePage";
-		showPage = "#failPage";
-		move_to_NextPage();
-		audio.src="fail.mp3";
-		audio.play();
-	});
+	//-------------->game system
 
 	//스코어 보여주는 창->각 난이도의 스테이지 선택창
 	$("#ok_clearButton").on("click", function(){
@@ -628,22 +606,21 @@ function set_resultPage(){
 		$("#starPrint").attr("src", "resultStar0.png");
 	}
 	
-	$("#scorePrint").html("스코어: "+scorePrint);
-	$("#timePrint").html("남은 시간: "+timePrint);
-	$("#corePrint").html("코어: "+corePrint);
+	$("#scorePrint").html("스코어: "+score);
+	$("#timePrint").html("남은 시간: "+timer);
 }
 
 
 //별 몇개 얻었는지 계산
 function judge_Star(){
 	star=0;
-	if(scorePrint>=500){
+	if(score>=500){
 		star++;
 	}
-	if(timePrint>=20){
+	if(timer>=20){
 		star++;
 	}
-	if(corePrint==1){
+	if(coreHit <= crHit){
 		star++;
 	}
 
@@ -924,6 +901,8 @@ function set_stage3Clear(){
 //------> 디자인
 function init(){
 	init_backGround();
+	score = 0;
+	timer = 100;
 	if (stage == 1) {
 		init_drawBrick_lvl1();
 		crHit = 0;		// 유저가 코어 맞춘 횟수 초기화
@@ -971,12 +950,13 @@ function draw(){
 	drawCeiling();
 	drawTimenScore();
 	ballReflection();
+	drawSettings();
 	if (delayTime == 0) {
 		ballX += velocity*vector[0];
 		ballY += velocity*vector[1];
 	}
 	if((coreHit <= crHit) || timer == 0){
-		endPlay(background);
+		endPlay("#resultPage");
 	}
 
 }
@@ -993,7 +973,7 @@ function ballReflection() {
 			barReflection(alpha);
 			ballY = cHeight - ballRadius
 		}else{
-			endPlay(gameoverimg);
+			endPlay("#failPage");
 		}
 	}
 	if(ballY <= h){
@@ -1102,14 +1082,23 @@ function delay() {
 	}
 }
 
-function endPlay(img){
+function endPlay(sp){
+	audio.pause();
+
+	set_resultPage();
+
+	hidePage= ".gamePage";
+	showPage = sp;
+	if(showPage == "#resultPage"){
+		audio.src="success.mp3";
+	}else if (showPage == "#failPage"){
+		audio.src="fail.mp3";
+	}
+	move_to_NextPage();
+
+	audio.play();
 	clearInterval(PLAY);
 	clearInterval(TIME);
-	context.clearRect(0,0,cWidth, cHeight);
-	context.drawImage(img, 0, 0, cWidth, cHeight);
-	context.font = "40px Georgia";
-	context.fillStyle = "white";
-	context.fillText("SCORE : "+(score+ timer), cWidth/2 - 80, cHeight - 50);
 }
 
 function setTime(){
@@ -1117,13 +1106,19 @@ function setTime(){
 		--timer;
 	}
 }
-
+function drawSettings(){
+	var set = $("#settings");
+	var contxt = set[0].getContext('2d');
+	contxt.drawImage(settings, 0, 0, set.width(), set.height());
+}
 function drawTimenScore(){
-	context.font = "50px Georgia";
-	context.fillStyle = "white";
-	context.fillText(score, cWidth - 50, cHeight - 100);
-	context.font = "20px Georgia";
-	context.fillText(timer,cWidth - 50, cHeight - 50);
+	var set = $("#scoredata");
+	var contxt = set[0].getContext('2d');
+	contxt.drawImage(scoreimg, 950,0, 180, 150);
+	contxt.font = "40px KoreanSDNRM";
+	contxt.fillStyle = "#FEED9F";
+	contxt.textAlign = "center";
+	contxt.fillText(score, cWidth - 87 ,cHeight - 700);
 	if (delayTime != 0) {
 		context.font = "80px Georgia";
 		context.fillStyle = "white";
@@ -1161,7 +1156,7 @@ function init_drawBrick_lvl1(){
 	w = 100;
 	h = 120;
 	bricWidth = (cWidth - 2*w)/COLS;
-	bricHeight = (cHeight - 2*h - 50)/ROWS;
+	bricHeight = (cHeight - 2*h - 200)/ROWS;
 
 	scoreBrickCount = 3;
 	deburfBrickCount = 0;
@@ -1201,7 +1196,7 @@ function init_drawBrick_lvl2(){
 	w = 100;
 	h = 120;
 	bricWidth = (cWidth - 2*w)/COLS;
-	bricHeight = (cHeight - 2*h - 50)/ROWS;
+	bricHeight = (cHeight - 2*h - 120)/ROWS;
 
 	scoreBrickCount = 7;
 	deburfBrickCount = 0;

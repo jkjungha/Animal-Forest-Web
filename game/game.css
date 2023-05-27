@@ -14,7 +14,9 @@ img {border: 0;}
     src: url("sindinaruM.ttf") format('truetype');
 }
 
-
+canvas{
+    position: absolute;
+}
 .page{
     position: relative;
     display: none;
