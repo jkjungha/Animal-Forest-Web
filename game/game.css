@@ -14,9 +14,9 @@ img {border: 0;}
     src: url("sindinaruM.ttf") format('truetype');
 }
 
-canvas{
+/*canvas{
     position: absolute;
-}
+}*/
 .page{
     position: relative;
     display: none;
@@ -28,6 +28,29 @@ canvas{
 }
 
 .gamePage{
+    position: relative;
+    display: none;
+}
+canvas {
+    pointer-events: none;
+}
+.gamePage canvas, .gamePage img{
+    position: absolute;
+}
+.gamePage #settings{
+    width: 120px;
+    height: auto;
+    left: 20px;
+}
+.gamePage #scoredata{
+    position: absolute;
+    left: 910px;
+    width: 220px;
+    top: 20px;
+    height: auto;
+}
+
+.settingsPage{
     position: relative;
     display: none;
 }
@@ -116,7 +139,20 @@ video{
     bottom: 50px;
     right: 50px;
 }
-
+/*******환경서정*******/
+.settingsTable{
+    position: absolute;
+    top: 200px;
+    left: 130px;
+}
+.settingsTable tr, .settingsTable td{
+    padding: 15px;
+    text-align: center;
+    vertical-align : middle;
+}
+.settingsTable tr:nth-child(3){
+    padding-top: 50px;
+}
 
 /********레벨선택화면**********/
 
