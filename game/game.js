@@ -1119,6 +1119,11 @@ function drawTimenScore(){
 	contxt.fillStyle = "#FEED9F";
 	contxt.textAlign = "center";
 	contxt.fillText(score, cWidth - 87 ,cHeight - 700);
+	contxt.clearRect(cWidth - 700, 0 ,300, cHeight);
+	contxt.font = "40px KoreanSDNRM";
+	contxt.fillStyle = "#FEED9F";
+	contxt.textAlign = "center";
+	contxt.fillText(timer+" sec", cWidth - 550 ,cHeight - 700);
 	if (delayTime != 0) {
 		context.font = "80px Georgia";
 		context.fillStyle = "white";
