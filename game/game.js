@@ -31,6 +31,8 @@ var score = 0;
 var timer = 100;
 var TIME;
 var PLAY;
+var GAMEDELAY;
+var delayTime;
 var cWidth;
 var cHeight;
 var cMinx;
@@ -414,8 +416,11 @@ $(document).ready(function(){
 })
 function START(){
 	init();
+	draw();
+	delayTime = 3;
 	PLAY = setInterval(draw, 5);
 	TIME = setInterval(setTime, 1000);
+	GAMEDELAY = setInterval(delay, 1000);
 }
 
 function move_to_NextPage(){
@@ -737,7 +742,6 @@ function set_stage3Clear(){
 }
 //------> 디자인
 function init(){
-
 	init_backGround();
 	if (stage == 1) {
 		init_drawBrick_lvl1();
@@ -770,7 +774,7 @@ function init(){
 		init_drawBall(20);
 	}
 }
-function init_backGround(){
+function init_backGround() {
 	context = myCanvas[0].getContext('2d');
 	cWidth = myCanvas.width();
 	cHeight = myCanvas.height();
@@ -785,9 +789,10 @@ function draw(){
 	drawBrick();
 	drawTimenScore();
 	ballReflection();
-	ballX += velocity*vector[0];
-	ballY += velocity*vector[1];
-
+	if (delayTime == 0) {
+		ballX += velocity*vector[0];
+		ballY += velocity*vector[1];
+	}
 	if((coreHit <= crHit) || timer == 0){
 		endPlay(background);
 	}
@@ -802,7 +807,7 @@ function ballReflection() {
 		vector[1] = -vector[1];
 	}else if(ballY > cHeight - ballRadius){
 		if(ballX > bStart && ballX < bStart + bWidth){
-			var alpha = ((bStart + (bWidth/2)) - ballX) / (bWidth / 2) * 0.5; //왼쪽: 양수, 오른쪽: 음수
+			var alpha = ((bStart + (bWidth/2)) - ballX) / (bWidth / 2) * 0.8; //왼쪽: 양수, 오른쪽: 음수
 			barReflection(alpha);
 			ballY = cHeight - ballRadius
 		}else{
@@ -817,9 +822,8 @@ function ballReflection() {
 function brickReflection() {
 	var row = Math.floor((ballY + ballRadius - h)/bricHeight);
 	var col = Math.floor((ballX + ballRadius - w + velocity*vector[0])/bricWidth);
-	
 
-	if(row < ROWS && col < COLS) {
+	if(row < ROWS && col < COLS && (row >= 0 && col >= 0)) {
 		if (bricks[row][col] != 0) {
 			vector[0] = -vector[0];
 		}
@@ -835,17 +839,16 @@ function brickReflection() {
 			bricks[row][col] = 0;
 			var event = Math.floor(Math.random()*3);
 			if (event == 0) {
-				bWidth -= 10;
+				bWidth -= 30;
 			}
 			else if (event == 1) {
-				velocity += 0.5;
+				velocity += 1;
 			}
 			else if (event == 2) {
 				TIME -= 5;
 			}
 		}
 		else if(bricks[row][col] == -3){
-			vector[0] = -vector[0];
 			crHit += 1;
 			score += 5;
 		}
@@ -855,7 +858,7 @@ function brickReflection() {
 	col = Math.floor((ballX + ballRadius - w)/bricWidth);
 	
 
-	if(row < ROWS && col < COLS) {
+	if(row < ROWS && col < COLS && (row >= 0 && col >= 0)) {
 		if (bricks[row][col] != 0) {
 			vector[1] = -vector[1];
 		}
@@ -907,6 +910,13 @@ function barReflection(alpha) {
 	}
 }
 
+function delay() {
+	delayTime -= 1;
+	if (delayTime == 0) {
+		clearInterval(GAMEDELAY);
+	}
+}
+
 function endPlay(img){
 	clearInterval(PLAY);
 	clearInterval(TIME);
@@ -918,7 +928,9 @@ function endPlay(img){
 }
 
 function setTime(){
-	--timer;
+	if (delayTime == 0) {
+		--timer;
+	}
 }
 
 function drawTimenScore(){
@@ -927,6 +939,11 @@ function drawTimenScore(){
 	context.fillText(score, cWidth - 50, cHeight - 100);
 	context.font = "20px Georgia";
 	context.fillText(timer,cWidth - 50, cHeight - 50);
+	if (delayTime != 0) {
+		context.font = "80px Georgia";
+		context.fillStyle = "white";
+		context.fillText(delayTime, cWidth/2 - 20, cHeight/2 - 50);
+	}
 }
 function init_drawBall(rad) {
 	ballRadius = rad;
