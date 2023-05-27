@@ -26,6 +26,7 @@ var L3S3=-1;
 
 
 //---------> 디자인
+var myCanvas;
 var context;
 var ballX;
 var ballY;
@@ -34,6 +35,8 @@ var score = 0;
 var timer = 100;
 var TIME;
 var PLAY;
+var GAMEDELAY;
+var delayTime;
 var cWidth;
 var cHeight;
 var cMinx;
@@ -41,32 +44,34 @@ var cMaxx;
 var bWidth;
 var bHeight;
 var bStart;
-var dx;
-var dy;
+var vector;
+var velocity;
 var ROWS;
 var COLS;
 var bricWidth;
 var bricHeight;
+var w;
+var h;
 var bricPadding;
 var bricks;
-var r;
-var c;
-var N;
-var level = 2;
+var level = 3;
+var coreHit;
+var crHit;
 var background = new Image();
-background.src = "background.avif"
 var gameoverimg = new Image();
 gameoverimg.src = "gameover.avif";
 var brick1 = new Image();
-brick1.src = "brick1.jpeg";
+brick1.src = "brick1.png";
 var brick2 = new Image();
 brick2.src = "brick2.png";
 var brick3 = new Image();
 brick3.src = "brick3.png";
-var coffee = new Image();
-coffee.src = "coffee.png";
-var mission = new Image();
-mission.src = "missioncomplete.jpeg";
+var corebrick = new Image();
+corebrick.src = "corebrick.png";
+var present = new Image();
+present.src = "present.png";
+var ball = new Image();
+ball.src = "peach.png";
 
 $(document).ready(function(){
 	/******************************/
@@ -177,7 +182,10 @@ $(document).ready(function(){
 			stage=2;
 			hidePage= ".stagePage";
 			showPage = "#EasyStage2Game";
+			myCanvas = $("#myCanvas1-2");
+			background.src = "easyStage2BG.png";
 			move_to_NextPage();
+			START();
 			$("video").prop("muted", true);
 			audio = new Audio("easy.mp3");
 			audio.play();
@@ -189,7 +197,10 @@ $(document).ready(function(){
 			stage=3;
 			hidePage= ".stagePage";
 			showPage = "#EasyStage3Game";
+			myCanvas = $("#myCanvas1-3");
+			background.src = "easyStage3BG.png";
 			move_to_NextPage();
+			START();
 			$("video").prop("muted", true);
 			audio = new Audio("easy.mp3");
 			audio.play();
@@ -239,7 +250,10 @@ $(document).ready(function(){
 		stage=1;
 		hidePage= "#EasyStory1-3";
 		showPage = "#EasyStage1Game";
+		myCanvas = $("#myCanvas1-1");
+		background.src = "easyStage1BG.png";
 		move_to_NextPage();
+		START();
 	});
 
 
@@ -263,7 +277,10 @@ $(document).ready(function(){
 			stage=2;
 			hidePage= ".stagePage";
 			showPage = "#MediumStage2Game";
+			myCanvas = $("#myCanvas2-2");
+			background.src = "mediumStage2BG.png";
 			move_to_NextPage();
+			START();
 			audio.src="middle.mp3";
 			audio.play();
 		}
@@ -274,7 +291,10 @@ $(document).ready(function(){
 			stage=3;
 			hidePage= ".stagePage";
 			showPage = "#MediumStage3Game";
+			myCanvas = $("#myCanvas2-3");
+			background.src = "mediumStage3BG.png";
 			move_to_NextPage();
+			START();
 			audio.src="middle.mp3";
 			audio.play();
 		}
@@ -315,7 +335,10 @@ $(document).ready(function(){
 		stage=1;
 		hidePage= "#MediumStory1-2";
 		showPage = "#MediumStage1Game";
+		myCanvas = $("#myCanvas2-1");
+		background.src = "mediumStage1BG.png";
 		move_to_NextPage();
+		START();
 		
 	});
 
@@ -339,7 +362,10 @@ $(document).ready(function(){
 			stage=2;
 			hidePage= ".stagePage";
 			showPage = "#HardStage2Game";
+			myCanvas = $("#myCanvas3-2");
+			background.src = "hardStage2BG.png";
 			move_to_NextPage();
+			START();
 			audio.src="hard.mp3";
 			audio.play();
 		}
@@ -351,7 +377,10 @@ $(document).ready(function(){
 			stage=3;
 			hidePage= ".stagePage";
 			showPage = "#HardStage3Game";
+			myCanvas = $("#myCanvas3-3");
+			background.src = "hardStage3BG.png";
 			move_to_NextPage();
+			START();
 			audio.src="hard.mp3";
 			audio.play();
 		}
@@ -383,7 +412,10 @@ $(document).ready(function(){
 		stage=1;
 		hidePage= "#HardStory1-2";
 		showPage = "#HardStage1Game";
+		myCanvas = $("#myCanvas3-1");
+		background.src = "hardStage1BG.png";
 		move_to_NextPage();
+		START();
 	});
 
 	/******************************/
@@ -481,15 +513,20 @@ $(document).ready(function(){
 		move_to_NextPage();
 	});
 	//--------> 디자인
-	init(5, 2, 200, 2);
-	PLAY = setInterval(draw, 5);
-	TIME = setInterval(setTime, 1000);
 	$(document).mousemove(function(e){
 		if(e.pageX >= cMinx && e.pageX <= cMaxx){
 			bStart = e.pageX - cMinx - (bWidth/2);
 		}
 	})
 })
+function START(){
+	init();
+	draw();
+	delayTime = 3;
+	PLAY = setInterval(draw, 5);
+	TIME = setInterval(setTime, 1000);
+	GAMEDELAY = setInterval(delay, 1000);
+}
 
 function move_to_NextPage(){
 	$(hidePage).fadeOut(0);
@@ -883,25 +920,44 @@ function set_stage3Clear(){
 	}
 }
 //------> 디자인
-function init(rad, vec, width, num){
+function init(){
 	init_backGround();
-	if (level == 1) {
-		init_drawBrick_lvl1(num);
+	if (stage == 1) {
+		init_drawBrick_lvl1();
+		crHit = 0;		// 유저가 코어 맞춘 횟수 초기화
+		coreHit = 3;	// 코어벽돌을 맞춰야하는 횟수
 	}
-	else if (level == 2) {
-		init_drawBrick_lvl2(num);
+	else if (stage == 2) {
+		init_drawBrick_lvl2();
+		crHit = 0;		// 유저가 코어 맞춘 횟수 초기화
+		coreHit = 5;	// 코어벽돌을 맞춰야하는 횟수
 	}
-	/*else if (level == 3) {
-		init_drawBrick_lvl3(num);
-	}*/
-	init_drawBar(width);
-	init_drawBall(rad, vec);
+	else if (stage == 3) {
+		init_drawBrick_lvl3();
+		crHit = 0;		// 유저가 코어 맞춘 횟수 초기화
+		coreHit = 7;	// 코어벽돌을 맞춰야하는 횟수
+	}
+	if (Lv == 1) {
+		velocity = 1.5;	// 단계별로 초기 공 속도 설정
+		init_drawBar(400);	// 단계별로 초기 바 크기 설정
+		init_drawBall(20);
+	}
+	else if (Lv== 2) {
+		velocity = 2;	// 단계별로 초기 공 속도 설정
+		init_drawBar(300);	// 단계별로 초기 바 크기 설정
+		init_drawBall(20);
+	}
+	else if (Lv == 3) {
+		velocity = 2.5;	// 단계별로 초기 공 속도 설정
+		init_drawBar(200);	// 단계별로 초기 바 크기 설정
+		init_drawBall(20);
+	}
 }
-function init_backGround(){
-	context = $("#myCanvas")[0].getContext('2d');
-	cWidth = $("#myCanvas").width();
-	cHeight = $("#myCanvas").height();
-	cMinx = $("#myCanvas").offset().left;
+function init_backGround() {
+	context = myCanvas[0].getContext('2d');
+	cWidth = myCanvas.width();
+	cHeight = myCanvas.height();
+	cMinx = myCanvas.offset().left;
 	cMaxx = cMinx + cWidth;
 }
 function draw(){
@@ -912,92 +968,132 @@ function draw(){
 	drawBrick();
 	drawTimenScore();
 	ballReflection();
-	ballX += dx;
-	ballY += dy;
-
-	var all = true;
-	for(i = 0;i<N;i++){
-		var ri = r[i];
-		var ci = c[i];
-		if(bricks[ri][ci] == -1){
-			all = false;
-			break;
-		}
+	if (delayTime == 0) {
+		ballX += velocity*vector[0];
+		ballY += velocity*vector[1];
 	}
-
-	if(all || timer == 0){
-		endPlay(mission);
+	if((coreHit <= crHit) || timer == 0){
+		endPlay(background);
 	}
 
 }
 
 function ballReflection() {
 	if(ballX < ballRadius || ballX > cWidth - ballRadius){
-		dx = -dx;
+		vector[0] = -vector[0];
 	}
 	if(ballY < ballRadius){
-		dy = -dy;
+		vector[1] = -vector[1];
 	}else if(ballY > cHeight - ballRadius){
 		if(ballX > bStart && ballX < bStart + bWidth){
-			var alpha = ((bStart + (bWidth/2)) - ballX) / (bWidth / 2) * 0.3; //왼쪽: 양수, 오른쪽: 음수
-			var vector = barReflection(dx, dy, alpha);
-			dx = vector[0];
-			dy = -vector[1];
+			var alpha = ((bStart + (bWidth/2)) - ballX) / (bWidth / 2) * 0.8; //왼쪽: 양수, 오른쪽: 음수
+			barReflection(alpha);
 			ballY = cHeight - ballRadius
 		}else{
 			endPlay(gameoverimg);
 		}
 	}
-	brickReflection();
+	if(ballX + ballRadius  >= w && ballY + ballRadius >= h){
+		brickReflection();
+	}
 }
 
 function brickReflection() {
-	var row = Math.floor((ballY)/(bricHeight+bricPadding));
-	var col = Math.floor((ballX + dx)/(bricWidth+bricPadding));
+	var row = Math.floor((ballY + ballRadius - h)/bricHeight);
+	var col = Math.floor((ballX + ballRadius - w + velocity*vector[0])/bricWidth);
 
-	if(row < ROWS) {
+	if(row < ROWS && col < COLS && (row >= 0 && col >= 0)) {
+		if (bricks[row][col] != 0) {
+			vector[0] = -vector[0];
+		}
 		if(bricks[row][col] >= 1){
-			dx = -dx;
-			score++;
+			score += 10;
 			bricks[row][col] -= 1;
-		}else if(bricks[row][col] == -1){
-			dx = -dx;
-			score++;
+		}
+		else if(bricks[row][col] == -1){
+			score += 100;
 			bricks[row][col] = 0;
+		}
+		else if(bricks[row][col] == -2){
+			bricks[row][col] = 0;
+			var event = Math.floor(Math.random()*3);
+			if (event == 0) {
+				bWidth -= 30;
+			}
+			else if (event == 1) {
+				velocity += 1;
+			}
+			else if (event == 2) {
+				TIME -= 5;
+			}
+		}
+		else if(bricks[row][col] == -3){
+			crHit += 1;
+			score += 5;
 		}
 	}
 
-	row = Math.floor((ballY + dy)/(bricHeight+bricPadding));
-	col = Math.floor((ballX)/(bricWidth+bricPadding));
+	row = Math.floor((ballY + ballRadius - h + velocity*vector[1])/bricHeight);
+	col = Math.floor((ballX + ballRadius - w)/bricWidth);
+	
 
-	if(row < ROWS) {
+	if(row < ROWS && col < COLS && (row >= 0 && col >= 0)) {
+		if (bricks[row][col] != 0) {
+			vector[1] = -vector[1];
+		}
 		if(bricks[row][col] >= 1){
-			dy = -dy;
-			score++;
+			score += 10;
 			bricks[row][col] -= 1;
-		}else if(bricks[row][col] == -1){
-			dy = -dy;
-			score++;
+		}
+		else if(bricks[row][col] == -1){
+			score += 100;
 			bricks[row][col] = 0;
+		}
+		else if(bricks[row][col] == -2){
+			bricks[row][col] = 0;
+			var event = Math.floor(Math.random()*3);
+			if (event == 0) {
+				bWidth -= 10;
+			}
+			else if (event == 1) {
+				velocity += 0.5;
+			}
+			else if (event == 2) {
+				TIME -= 5;
+			}
+		}
+		else if(bricks[row][col] == -3){
+			crHit += 1;
+			score += 5;
 		}
 	}
 }
 
-function barReflection(dx, dy, alpha) {
-	if (dx >= 0) {
-		var velocity = Math.sqrt(((dy*dy) + (dx*dx)));
-		var angle = Math.atan(dy/dx);
+function barReflection(alpha) {
+	if (vector[0] >= 0) {
+		var angle = Math.atan(vector[1]/vector[0]);
 		angle = angle * (1 + alpha);
-		var vector = [ velocity * Math.cos(angle), velocity * Math.sin(angle) ];
+		if (Math.abs(angle) < Math.PI/6) {
+			angle = Math.PI/6
+		}
+		vector = [ Math.cos(angle), -Math.sin(angle) ];
 	}
 	else {
-		dx = -dx
-		var velocity = Math.sqrt(((dy*dy) + (dx*dx)));
-		var angle = Math.atan(dy/dx);
+		vector[0] = -vector[0]
+		var angle = Math.atan(vector[1]/vector[0]);
 		angle = angle * (1 - alpha);
-		var vector = [ -velocity * Math.cos(angle), velocity * Math.sin(angle) ];
+		if (Math.abs(angle) < Math.PI/6) {
+			angle = Math.PI/6
+		}
+		vector = [ -Math.cos(angle), -Math.sin(angle) ];
 	}
-	return vector;
+}
+
+function delay() {
+	delayTime -= 1;
+	if (delayTime == 0) {
+		clearInterval(GAMEDELAY);
+	}
 }
 
 function endPlay(img){
@@ -1011,7 +1107,9 @@ function endPlay(img){
 }
 
 function setTime(){
-	--timer;
+	if (delayTime == 0) {
+		--timer;
+	}
 }
 
 function drawTimenScore(){
@@ -1020,20 +1118,20 @@ function drawTimenScore(){
 	context.fillText(score, cWidth - 50, cHeight - 100);
 	context.font = "20px Georgia";
 	context.fillText(timer,cWidth - 50, cHeight - 50);
+	if (delayTime != 0) {
+		context.font = "80px Georgia";
+		context.fillStyle = "white";
+		context.fillText(delayTime, cWidth/2 - 20, cHeight/2 - 50);
+	}
 }
-function init_drawBall(rad, vec) {
+function init_drawBall(rad) {
 	ballRadius = rad;
-	ballX = 100;
-	ballY = ROWS*bricHeight + 50;
-	dx = vec;
-	dy = vec;
+	ballX = bStart + bWidth/2;
+	ballY = cHeight - ballRadius - bHeight - 20;
+	vector = [Math.sqrt(0.5), Math.sqrt(0.5)];
 }
 function drawBall(){
-	context.fillStyle = "white";
-	context.beginPath();
-	context.arc(ballX,ballY,ballRadius,0, 2.0*Math.PI, false);
-	context.closePath();
-	context.fill();
+	context.drawImage(ball, ballX - ballRadius, ballY - ballRadius, ballRadius*2, ballRadius*2);
 }
 function init_drawBar(width){
 	bWidth = width;
@@ -1045,63 +1143,165 @@ function drawBar(){
 	context.beginPath();
 	context.fillRect(bStart, cHeight- bHeight, bWidth, bHeight);
 }
-function init_drawBrick_lvl1(num){
+function init_drawBrick_lvl1(){
 	ROWS = 3;
 	COLS = 4;
-	bricPadding = 5;
-	bricWidth = (cWidth / COLS);
-	bricHeight = bricWidth/3;
+	bricPadding = 10;
+	w = 100;
+	h = 120;
+	bricWidth = (cWidth - 2*w)/COLS;
+	bricHeight = (cHeight - 2*h - 50)/ROWS;
+
+	scoreBrickCount = 3;
+	deburfBrickCount = 0;
+	doubleBrickCount = 0;
+	tripleBrickCount = 0;
 
 	bricks = new Array(ROWS);
-	for(i=0;i<ROWS;i++){
+
+	for (i=0;i<ROWS;i++) {
 		bricks[i] = new Array(COLS);
-		for(j=0;j<COLS;j++){
+		for(j=0;j<COLS;j++) {
 			bricks[i][j] = 1;
 		}
 	}
-	N = num;
-	r = new Array(N);
-	c = new Array(N);
 
-	for(i=0;i<N;i++){
+	bricks[0][COLS/2] = -3;
+	bricks[0][COLS/2 - 1] = -3;
+	bricks[1][COLS/2] = -3;
+	bricks[1][COLS/2 - 1] = -3;
+
+	for (i = 0 ; i < scoreBrickCount ; i++){
 		var ri = Math.floor(Math.random()*ROWS);
 		var ci = Math.floor(Math.random()*COLS);
-		if(bricks[ri][ci] != -1){
-			r[i] = ri;
-			c[i] = ci;
+		if (bricks[ri][ci] == 1) {
 			bricks[ri][ci] = -1;
-		}else {
+		}
+		else {
 			i--;
 		}
 	}
 }
 
-function init_drawBrick_lvl2(num){
-	ROWS = 3;
-	COLS = 4;
-	bricPadding = 5;
-	bricWidth = (cWidth / COLS);
-	bricHeight = bricWidth/3;
+function init_drawBrick_lvl2(){
+	ROWS = 4;
+	COLS = 6;
+	bricPadding = 10;
+	w = 100;
+	h = 120;
+	bricWidth = (cWidth - 2*w)/COLS;
+	bricHeight = (cHeight - 2*h - 50)/ROWS;
+
+	scoreBrickCount = 7;
+	deburfBrickCount = 0;
+	doubleBrickCount = 8;
+	tripleBrickCount = 0;
 
 	bricks = new Array(ROWS);
-	for(i=0;i<ROWS;i++){
+
+	for (i=0;i<ROWS;i++) {
 		bricks[i] = new Array(COLS);
-		for(j=0;j<COLS;j++){
-			bricks[i][j] = 3;
+		for(j=0;j<COLS;j++) {
+			bricks[i][j] = 1;
 		}
 	}
-	N = num;
-	r = new Array(N);
-	c = new Array(N);
 
-	for(i=0;i<N;i++){
+	bricks[0][COLS/2] = -3;
+	bricks[0][COLS/2 - 1] = -3;
+	bricks[1][COLS/2] = -3;
+	bricks[1][COLS/2 - 1] = -3;
+
+	for (i = 0 ; i < scoreBrickCount ; i++){
 		var ri = Math.floor(Math.random()*ROWS);
 		var ci = Math.floor(Math.random()*COLS);
-		if(bricks[ri][ci] != -1){
-			r[i] = ri;
-			c[i] = ci;
+		if (bricks[ri][ci] == 1) {
 			bricks[ri][ci] = -1;
-		}else {
+		}
+		else {
+			i--;
+		}
+	}
+
+	for (i = 0 ; i < doubleBrickCount ; i++){
+		var ri = Math.floor(Math.random()*ROWS);
+		var ci = Math.floor(Math.random()*COLS);
+		if (bricks[ri][ci] == 1) {
+			bricks[ri][ci] = 2;
+		}
+		else {
+			i--;
+		}
+	}
+}
+
+function init_drawBrick_lvl3(){
+	ROWS = 6;
+	COLS = 8;
+	bricPadding = 10;
+	w = 100;
+	h = 120;
+	bricWidth = (cWidth - 2*w)/COLS;
+	bricHeight = (cHeight - 2*h - 50)/ROWS;
+
+	scoreBrickCount = 9;
+	deburfBrickCount = 5;
+	doubleBrickCount = 10;
+	tripleBrickCount = 6;
+
+	bricks = new Array(ROWS);
+
+	for (i=0;i<ROWS;i++) {
+		bricks[i] = new Array(COLS);
+		for(j=0;j<COLS;j++) {
+			bricks[i][j] = 1;
+		}
+	}
+
+	bricks[0][COLS/2] = -3;
+	bricks[0][COLS/2 - 1] = -3;
+	bricks[1][COLS/2] = -3;
+	bricks[1][COLS/2 - 1] = -3;
+
+	for (i = 0 ; i < scoreBrickCount ; i++){
+		var ri = Math.floor(Math.random()*ROWS);
+		var ci = Math.floor(Math.random()*COLS);
+		if (bricks[ri][ci] == 1) {
+			bricks[ri][ci] = -1;
+		}
+		else {
+			i--;
+		}
+	}
+
+	for (i = 0 ; i < doubleBrickCount ; i++){
+		var ri = Math.floor(Math.random()*ROWS);
+		var ci = Math.floor(Math.random()*COLS);
+		if (bricks[ri][ci] == 1) {
+			bricks[ri][ci] = 2;
+		}
+		else {
+			i--;
+		}
+	}
+
+	for (i = 0 ; i < tripleBrickCount ; i++){
+		var ri = Math.floor(Math.random()*ROWS);
+		var ci = Math.floor(Math.random()*COLS);
+		if (bricks[ri][ci] == 1) {
+			bricks[ri][ci] = 3;
+		}
+		else {
+			i--;
+		} 
+	}
+
+	for (i = 0 ; i < deburfBrickCount ; i++){
+		var ri = Math.floor(Math.random()*ROWS);
+		var ci = Math.floor(Math.random()*COLS);
+		if (bricks[ri][ci] == 1) {
+			bricks[ri][ci] = -2;
+		}
+		else {
 			i--;
 		}
 	}
@@ -1111,14 +1311,19 @@ function drawBrick(){
 	for(i=0;i<ROWS;i++){
 		for(j=0;j<COLS;j++){
 			if(bricks[i][j] == 3){
-				context.drawImage(brick3, j*bricWidth, i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
+				context.drawImage(brick3, w+j*bricWidth, h+i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
 			}else if(bricks[i][j] == 2){
-				context.drawImage(brick2, j*bricWidth, i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
+				context.drawImage(brick2, w+j*bricWidth, h+i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
 			}else if(bricks[i][j] == 1){
-				context.drawImage(brick1, j*bricWidth, i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
+				context.drawImage(brick1, w+j*bricWidth, h+i*bricHeight,  bricWidth - bricPadding, bricHeight - bricPadding);
 			}else if(bricks[i][j] == -1){
-				context.drawImage(coffee, j*bricWidth+(bricWidth-bricHeight)/2, i*bricHeight, bricHeight - bricPadding, bricHeight - bricPadding);
+				context.drawImage(present, w+j*bricWidth, h+i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
+			}else if(bricks[i][j] == -2){
+				context.drawImage(present, w+j*bricWidth, h+i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
 			}
 		}
 	}
+
+	context.drawImage(corebrick, w+(COLS/2-1)*bricWidth, h, bricWidth*2 - bricPadding, bricHeight*2 - bricPadding);
+
 }
