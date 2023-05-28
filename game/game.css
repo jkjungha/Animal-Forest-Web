@@ -13,10 +13,6 @@ img {border: 0;}
     font-family: "sindinaru";
     src: url("sindinaruM.ttf") format('truetype');
 }
-
-/*canvas{
-    position: absolute;
-}*/
 .page{
     position: relative;
     display: none;
@@ -49,7 +45,6 @@ canvas {
     top: 20px;
     height: auto;
 }
-
 .settingsPage{
     position: relative;
     display: none;
@@ -153,7 +148,12 @@ video{
 .settingsTable tr:nth-child(3){
     padding-top: 50px;
 }
-
+.settingsback{
+    position: absolute;
+    height: 85px;
+    left: 421px;
+    bottom: 50px;
+}
 /********레벨선택화면**********/
 
 #levelTable{
