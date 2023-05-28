@@ -136,23 +136,51 @@ video{
 }
 /*******환경서정*******/
 .settingsTable{
+    margin-right: 30px;
     position: absolute;
     top: 200px;
-    left: 130px;
+    left: 40px;
 }
 .settingsTable tr, .settingsTable td{
-    padding: 15px;
+    padding: 0px 30px;
     text-align: center;
     vertical-align : middle;
 }
 .settingsTable tr:nth-child(3){
-    padding-top: 50px;
+   position: absolute;
+   top: 330px;
+}
+.settingsTable tr:nth-child(3) td:nth-child(2){
+    padding: 0 100px 0 200px;
+}
+.settingsTable tr:nth-child(3) td:nth-child(3){
+    padding: 0 100px 0 100px;
 }
 .settingsback{
     position: absolute;
     height: 85px;
     left: 421px;
     bottom: 50px;
+}
+.settingsTable td{
+    position: relative;
+}
+.finger {
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    display:none;
+}
+.settingsTable tr:nth-child(3) td:nth-child(2) .finger{
+    position: absolute;
+    left: 135px;
+    top: 0px;
+}
+
+.settingsTable tr:nth-child(3) td:nth-child(3) .finger{
+    position: absolute;
+    left: 38px;
+    top:0px;
 }
 /********레벨선택화면**********/
 

@@ -23,6 +23,7 @@ var L3S3=-1;
 
 
 //---------> 디자인
+var barcolor = "#FFFFFF";
 var myCanvas;
 var context;
 var ballX;
@@ -538,7 +539,64 @@ $(document).ready(function(){
 		move_to_NextPage();
 		RESTART();
 	})
+	$("#fingerp").css("display", "inline");
+	$("#finger4").css("display", "inline");
+	$("#fingeron").css("display", "inline");
+	//공 모양
+	$("#cherry").on("click", function(){
+		ball.src = "cherry.png";
+		$(".ballsize .finger").css("display", "none");
+		$("#fingerc").css("display", "inline");
+	})
+	$("#orange").on("click", function(){
+		ball.src = "orange.png";
+		$(".ballsize .finger").css("display", "none");
+		$("#fingero").css("display", "inline");
+	})
+	$("#peach").on("click", function(){
+		ball.src = "peach.png";
+		$(".ballsize .finger").css("display", "none");
+		$("#fingerp").css("display", "inline");
+	})
+	$("#apple").on("click", function(){
+		ball.src = "apple.png";
+		$(".ballsize .finger").css("display", "none");
+		$("#fingera").css("display", "inline");
+	})
 
+	//바 색깔
+	$("#color4").on("click", function(){
+		barcolor = "#FFFFFF";
+		$(".barcolor .finger").css("display", "none");
+		$("#finger4").css("display", "inline");
+	})
+	$("#color5").on("click", function(){
+		barcolor = "#FF528C";
+		$(".barcolor .finger").css("display", "none");
+		$("#finger5").css("display", "inline");
+	})
+	$("#color6").on("click", function(){
+		barcolor = "#0099FF";
+		$(".barcolor .finger").css("display", "none");
+		$("#finger6").css("display", "inline");
+	})
+	$("#color7").on("click", function(){
+		barcolor = "#FFB800";
+		$(".barcolor .finger").css("display", "none");
+		$("#finger7").css("display", "inline");
+	})
+
+	//뮤트 기능 
+	$("#switchon").on("click", function(){
+		audio.muted = !audio.muted;
+		$(".musicmute .finger").css("display", "none");
+		$("#fingeron").css("display", "inline");
+	})
+	$("#switchoff").on("click", function(){
+		audio.muted = !audio.muted;
+		$(".musicmute .finger").css("display", "none");
+		$("#fingeroff").css("display", "inline");
+	})
 
 	$(document).mousemove(function(e){
 		if(e.pageX >= cMinx && e.pageX <= cMaxx){
@@ -1195,7 +1253,7 @@ function init_drawBar(width){
 	bStart = cWidth/2;
 }
 function drawBar(){
-	context.fillStyle = "#CEA800";
+	context.fillStyle = barcolor;
 	context.beginPath();
 	context.fillRect(bStart, cHeight- bHeight, bWidth, bHeight);
 }
