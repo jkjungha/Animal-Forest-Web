@@ -20,9 +20,9 @@ var L2S3=-1;
 var L3S1=-1;
 var L3S2=-1;
 var L3S3=-1;
-var scoreSTAGE1 = 80;
-var scoreSTAGE2 = 120;
-var scoreSTAGE3 = 200;
+var scoreLV1 = 400;
+var scoreLV2 = 600;
+var scoreLV3 = 1000;
 
 
 //---------> 디자인
@@ -772,55 +772,55 @@ function judge_Star(){
 	}
 
 	if(L1S1<star&&Lv==1&&stage==1){
-		if(score>=scoreSTAGE1){
+		if(score>=scoreLV1){
 			star++;
 		}
 		L1S1=star;
 	}
 	else if(L1S2<star&&Lv==1&&stage==2){
-		if(score>=scoreSTAGE2){
+		if(score>=scoreLV1){
 			star++;
 		}
 		L1S2=star;
 	}
 	else if(L1S3<star&&Lv==1&&stage==3){
-		if(score>=scoreSTAGE3){
+		if(score>=scoreLV1){
 			star++;
 		}
 		L1S3=star;
 	}
 	else if(L2S1<star&&Lv==2&&stage==1){
-		if(score>=scoreSTAGE1){
+		if(score>=scoreLV2){
 			star++;
 		}
 		L2S1=star;
 	}
 	else if(L2S2<star&&Lv==2&&stage==2){
-		if(score>=scoreSTAGE2){
+		if(score>=scoreLV2){
 			star++;
 		}
 		L2S2=star;
 	}
 	else if(L2S3<star&&Lv==2&&stage==3){
-		if(score>=scoreSTAGE3){
+		if(score>=scoreLV2){
 			star++;
 		}
 		L2S3=star;
 	}
 	else if(L3S1<star&&Lv==3&&stage==1){
-		if(score>=scoreSTAGE1){
+		if(score>=scoreLV3){
 			star++;
 		}
 		L3S1=star;
 	}
 	else if(L3S2<star&&Lv==3&&stage==2){
-		if(score>=scoreSTAGE2){
+		if(score>=scoreLV3){
 			star++;
 		}
 		L3S2=star;
 	}
 	else if(L3S3<star&&Lv==3&&stage==3){
-		if(score>=scoreSTAGE3){
+		if(score>=scoreLV3){
 			star++;
 		}
 		L3S3=star;
@@ -1080,35 +1080,29 @@ function set_stage3Clear(){
 function init(){
 	init_backGround();
 	score = 0;
-	if (stage == 1) {
+	if (Lv == 1) {
+		velocity = 2;	// 단계별로 초기 공 속도 설정
+		init_drawBar(400);	// 단계별로 초기 바 크기 설정
+		init_drawBall(30);
 		init_drawBrick_lvl1();
 		crHit = 0;		// 유저가 코어 맞춘 횟수 초기화
 		coreHit = 3;	// 코어벽돌을 맞춰야하는 횟수
 	}
-	else if (stage == 2) {
+	else if (Lv== 2) {
+		velocity = 3;	// 단계별로 초기 공 속도 설정
+		init_drawBar(300);	// 단계별로 초기 바 크기 설정
+		init_drawBall(30);
 		init_drawBrick_lvl2();
 		crHit = 0;		// 유저가 코어 맞춘 횟수 초기화
 		coreHit = 5;	// 코어벽돌을 맞춰야하는 횟수
 	}
-	else if (stage == 3) {
+	else if (Lv == 3) {
+		velocity = 4;	// 단계별로 초기 공 속도 설정
+		init_drawBar(200);	// 단계별로 초기 바 크기 설정
+		init_drawBall(30);
 		init_drawBrick_lvl3();
 		crHit = 0;		// 유저가 코어 맞춘 횟수 초기화
 		coreHit = 7;	// 코어벽돌을 맞춰야하는 횟수
-	}
-	if (Lv == 1) {
-		velocity = 1.5;	// 단계별로 초기 공 속도 설정
-		init_drawBar(400);	// 단계별로 초기 바 크기 설정
-		init_drawBall(30);
-	}
-	else if (Lv== 2) {
-		velocity = 2;	// 단계별로 초기 공 속도 설정
-		init_drawBar(300);	// 단계별로 초기 바 크기 설정
-		init_drawBall(30);
-	}
-	else if (Lv == 3) {
-		velocity = 2.5;	// 단계별로 초기 공 속도 설정
-		init_drawBar(200);	// 단계별로 초기 바 크기 설정
-		init_drawBall(30);
 	}
 }
 function init_backGround() {
@@ -1118,7 +1112,7 @@ function init_backGround() {
 	cMinx = myCanvas.offset().left;
 	cMaxx = cMinx + cWidth;
 }
-function draw(){
+function draw() {
 	context.clearRect(0,0,cWidth, cHeight);
 	context.drawImage(background, 0, 0, cWidth, cHeight);
 	drawBall();
@@ -1130,18 +1124,17 @@ function draw(){
 	if (delayTime == 0) {
 		ballX += velocity*vector[0];
 		ballY += velocity*vector[1];
-
 	}
 
 	if(timer <= 0){
 		endPlay("#resultPage");
 	}
 	if(coreHit <= crHit){
-		if(stage==1 && score >= scoreSTAGE1){
+		if(stage==1 && score >= scoreLV1){
 			endPlay("#resultPage");
-		}else if(stage==2 && score >= scoreSTAGE2){
+		}else if(stage==2 && score >= scoreLV2){
 			endPlay("#resultPage");
-		}else if(stage==3 && score >= scoreSTAGE3){
+		}else if(stage==3 && score >= scoreLV3){
 			endPlay("#resultPage");
 		}
 	}
@@ -1336,14 +1329,14 @@ function drawCeiling(){
 	context.fillRect(0, 0, cWidth, h);
 }
 function init_drawBrick_lvl1(){
-	timer = 120;
-	ROWS = 3;
-	COLS = 4;
+	timer = 60 + (stage-1) * 5;
+	ROWS = 2+stage;
+	COLS = 6;
 	bricPadding = 10;
 	w = 100;
 	h = 120;
 	bricWidth = (cWidth - 2*w)/COLS;
-	bricHeight = (cHeight - 2*h - 200)/ROWS;
+	bricHeight = bricWidth/2;
 
 	scoreBrickCount = 3;
 	deburfBrickCount = 0;
@@ -1377,18 +1370,18 @@ function init_drawBrick_lvl1(){
 }
 
 function init_drawBrick_lvl2(){
-	timer = 90;
-	ROWS = 4;
-	COLS = 6;
-	bricPadding = 10;
+	timer = 80 + (stage-1) * 10;
+	ROWS = 5+stage;
+	COLS = 8;
+	bricPadding = 5;
 	w = 100;
 	h = 120;
 	bricWidth = (cWidth - 2*w)/COLS;
-	bricHeight = (cHeight - 2*h - 120)/ROWS;
+	bricHeight = bricWidth/2;
 
 	scoreBrickCount = 7;
 	deburfBrickCount = 0;
-	doubleBrickCount = 8;
+	doubleBrickCount = 15;
 	tripleBrickCount = 0;
 
 	bricks = new Array(ROWS);
@@ -1429,19 +1422,19 @@ function init_drawBrick_lvl2(){
 }
 
 function init_drawBrick_lvl3(){
-	timer = 60;
-	ROWS = 6;
-	COLS = 8;
-	bricPadding = 10;
+	timer = 100 + (stage-1) * 10;
+	ROWS = 7+stage;
+	COLS = 10;
+	bricPadding = 3;
 	w = 100;
 	h = 120;
 	bricWidth = (cWidth - 2*w)/COLS;
-	bricHeight = (cHeight - 2*h - 50)/ROWS;
+	bricHeight = bricWidth/2;
 
-	scoreBrickCount = 9;
+	scoreBrickCount = 10;
 	deburfBrickCount = 5;
-	doubleBrickCount = 10;
-	tripleBrickCount = 6;
+	doubleBrickCount = 30;
+	tripleBrickCount = 10;
 
 	bricks = new Array(ROWS);
 
