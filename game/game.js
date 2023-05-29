@@ -159,6 +159,61 @@ $(document).ready(function(){
 		$(".goBackButton").attr("src", "goBackButton_n.png");
 	});
 
+	$("#easyStage1").mouseover(function(){
+		$(".stage1Text").css("text-shadow", "2px 2px 4px gray");
+	})
+	$("#easyStage1").mouseout(function(){
+		$(".stage1Text").css("text-shadow", "none");
+	})
+	$("#easyStage2").mouseover(function(){
+		$(".stage2Text").css("text-shadow", "2px 2px 4px gray");
+	})
+	$("#easyStage2").mouseout(function(){
+		$(".stage2Text").css("text-shadow", "none");
+	})
+	$("#easyStage3").mouseover(function(){
+		$(".stage3Text").css("text-shadow", "2px 2px 4px gray");
+	})
+	$("#easyStage3").mouseout(function(){
+		$(".stage3Text").css("text-shadow", "none");
+	})
+	$("#mediumStage1").mouseover(function(){
+		$(".stage1Text").css("text-shadow", "2px 2px 4px gray");
+	})
+	$("#mediumStage1").mouseout(function(){
+		$(".stage1Text").css("text-shadow", "none");
+	})
+	$("#mediumStage2").mouseover(function(){
+		$(".stage2Text").css("text-shadow", "2px 2px 4px gray");
+	})
+	$("#mediumStage2").mouseout(function(){
+		$(".stage2Text").css("text-shadow", "none");
+	})
+	$("#mediumStage3").mouseover(function(){
+		$(".stage3Text").css("text-shadow", "2px 2px 4px gray");
+	})
+	$("#mediumStage3").mouseout(function(){
+		$(".stage3Text").css("text-shadow", "none");
+	})
+	$("#hardStage1").mouseover(function(){
+		$(".stage1Text").css("text-shadow", "2px 2px 4px gray");
+	})
+	$("#hardStage1").mouseout(function(){
+		$(".stage1Text").css("text-shadow", "none");
+	})
+	$("#hardStage2").mouseover(function(){
+		$(".stage2Text").css("text-shadow", "2px 2px 4px gray");
+	})
+	$("#hardStage2").mouseout(function(){
+		$(".stage2Text").css("text-shadow", "none");
+	})
+	$("#hardStage3").mouseover(function(){
+		$(".stage3Text").css("text-shadow", "2px 2px 4px gray");
+	})
+	$("#hardStage3").mouseout(function(){
+		$(".stage3Text").css("text-shadow", "none");
+	})
+
 	/******************************/
 	/******easy-stage 선택 화면****/
 	/*****************************/
@@ -185,60 +240,6 @@ $(document).ready(function(){
 			PLAY_1(3);
 		}
 	});
-	$("#easyStage1").mouseover(function(){
-      $(".stage1Text").css("text-shadow", "2px 2px 4px gray");
-   })
-   $("#easyStage1").mouseout(function(){
-      $(".stage1Text").css("text-shadow", "none");
-   })
-   $("#easyStage2").mouseover(function(){
-      $(".stage2Text").css("text-shadow", "2px 2px 4px gray");
-   })
-   $("#easyStage2").mouseout(function(){
-      $(".stage2Text").css("text-shadow", "none");
-   })
-   $("#easyStage3").mouseover(function(){
-      $(".stage3Text").css("text-shadow", "2px 2px 4px gray");
-   })
-   $("#easyStage3").mouseout(function(){
-      $(".stage3Text").css("text-shadow", "none");
-   })
-   $("#mediumStage1").mouseover(function(){
-      $(".stage1Text").css("text-shadow", "2px 2px 4px gray");
-   })
-   $("#mediumStage1").mouseout(function(){
-      $(".stage1Text").css("text-shadow", "none");
-   })
-   $("#mediumStage2").mouseover(function(){
-      $(".stage2Text").css("text-shadow", "2px 2px 4px gray");
-   })
-   $("#mediumStage2").mouseout(function(){
-      $(".stage2Text").css("text-shadow", "none");
-   })
-   $("#mediumStage3").mouseover(function(){
-      $(".stage3Text").css("text-shadow", "2px 2px 4px gray");
-   })
-   $("#mediumStage3").mouseout(function(){
-      $(".stage3Text").css("text-shadow", "none");
-   })
-   $("#hardStage1").mouseover(function(){
-      $(".stage1Text").css("text-shadow", "2px 2px 4px gray");
-   })
-   $("#hardStage1").mouseout(function(){
-      $(".stage1Text").css("text-shadow", "none");
-   })
-   $("#hardStage2").mouseover(function(){
-      $(".stage2Text").css("text-shadow", "2px 2px 4px gray");
-   })
-   $("#hardStage2").mouseout(function(){
-      $(".stage2Text").css("text-shadow", "none");
-   })
-   $("#hardStage3").mouseover(function(){
-      $(".stage3Text").css("text-shadow", "2px 2px 4px gray");
-   })
-   $("#hardStage3").mouseout(function(){
-      $(".stage3Text").css("text-shadow", "none");
-   })
 
 
 	/******************************/
@@ -447,12 +448,11 @@ $(document).ready(function(){
 
 	//실패창->각 난이도의 스테이지 선택창
 	$("#ok_failButton").on("click", function(){
-		set_stage3Clear();
 		hidePage="#failPage";
+		set_stage3Clear();
 		showPage="#stage3Clear";
-		move_to_NextPage();
 		audio.pause();
-
+		move_to_NextPage();
 	});
 	$("#ok_failButton").mouseover(function(){
 		$("#ok_failButton").attr("src","okayButton_mo.png");
@@ -465,41 +465,41 @@ $(document).ready(function(){
 	//아이템 착용 결과창->각 난이도의 스테이지 선택창
 	$("#nextLevel").on("click", function(){
 		hidePage="#stage3Clear";
-		if(Lv==1){
-			if(openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>6){
-				PLAY_2(1);
-				Lv = 2;
-				stage = 1;
-			}else{
+		if($("#fashion").src == "neoguul.png"){
+			if(Lv==1){
 				if(stage == 1){
-					PLAY_1(1);
-				}else if(stage ==2){
 					PLAY_1(2);
+				}else if(stage ==2){
+					PLAY_1(3);
+				}else if(stage == 3){
+					PLAY_1(3);
+				}
+			}else if(Lv==2){
+				if(stage == 1){
+					PLAY_1(2);
+				}else if(stage ==2){
+					PLAY_1(3);
+				}else if(stage == 3){
+					PLAY_1(3);
+				}
+			}else if(Lv==3){
+				if(stage == 1){
+					PLAY_1(2);
+				}else if(stage ==2){
+					PLAY_1(3);
 				}else if(stage == 3){
 					PLAY_1(3);
 				}
 			}
-		}else if(Lv==2){
-			if(openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>6){
+		}else{
+			if(Lv==1){
+				PLAY_2(1);
+				Lv=2;
+				stage=1;
+			}else if(Lv==2){
 				PLAY_3(1);
-				Lv = 2;
-				stage = 1;
-			}else{
-				if(stage == 1){
-					PLAY_2(1);
-				}else if(stage ==2){
-					PLAY_2(2);
-				}else if(stage == 3){
-					PLAY_2(3);			
-				}
-			}
-		}else if(Lv==3){
-			if(stage == 1){
-				PLAY_3(1);
-			}else if(stage ==2){
-				PLAY_3(2);
-			}else if(stage == 3){
-				PLAY_3(3);
+				Lv=2;
+				stage=1;
 			}
 		}
 	});
@@ -712,58 +712,59 @@ function set_resultPage(){
 	}
 
 
-	if(x==3){
-		$("#starPrint").attr("src", "resultStar3.png");
+	if(x==3 || x == 2){
 		if(Lv==1&&stage==1){
-			if(openedStage[0][0]==3){
+			if(openedStage[0][0]>=2){
 				$("#item").attr({"src": "sunglass 1.png", "height" : "120px"});
 			}
 		}
 		else if(Lv==1&&stage==2){
-			if(openedStage[0][1]==3){
+			if(openedStage[0][1]>=2){
 				$("#item").attr({"src": "flower 1.png", "height" : "120px"});
 			}
 		}
 		else if(Lv==1&&stage==3){
-			if(openedStage[0][2]==3){
+			if(openedStage[0][2]>=2){
 				$("#item").attr({"src": "watermelon 1.png", "height" : "120px"});
 			}
 		}
 		else if(Lv==2&&stage==1){
-			if(openedStage[1][0]==3){
+			if(openedStage[1][0]>=2){
 				$("#item").attr({"src": "cucumber 1.png", "height" : "120px"});
 			}
 		}
 		else if(Lv==2&&stage==2){
-			if(openedStage[1][1]==3){
+			if(openedStage[1][1]>=2){
 				$("#item").attr({"src": "boba 1.png", "height" : "120px"});
 			}
 		}
 		else if(Lv==2&&stage==3){
-			if(openedStage[1][2]==3){
+			if(openedStage[1][2]>=2){
 				$("#item").attr({"src": "rose 2.png", "height" : "120px"});
 			}
 		}
 		else if(Lv==3&&stage==1){
-			if(openedStage[2][0]==3){
+			if(openedStage[2][0]>=2){
 				$("#item").attr({"src": "ukelele 1.png", "height" : "120px"});
 			}
 		}
 		else if(Lv==3&&stage==2){
-			if(openedStage[2][1]==3){
+			if(openedStage[2][1]>=2){
 				$("#item").attr({"src": "hairpin 1.png", "height" : "120px"});
 			}
 		}
 		else if(Lv==3&&stage==3){
-			if(openedStage[2][2]==3){
+			if(openedStage[2][2]>=2){
 				$("#item").attr({"src": "umbrella 1.png" ,"height" : "80px"});
 			}
 		}
-		$("#itemBox").show()
+		$("#itemBox").show();
+		if(x==3){
+			$("#starPrint").attr("src", "resultStar3.png");
+		}else if(x==2){
+			$("#starPrint").attr("src", "resultStar2.png");
+		}
 
-	}
-	else if(x==2){
-		$("#starPrint").attr("src", "resultStar2.png");
 	}
 	else if(x==1){
 		$("#starPrint").attr("src", "resultStar1.png");
@@ -846,7 +847,7 @@ function judge_Star(){
 }
 
 
-//stage클리어 여부에 따른 이미지 변경 
+//stage클리어 여부에 따른 오픈 페이지
 function set_stagePage(){
 	if(Lv==1&&stage==1){
 		if(openedStage[0][1]==-1){
@@ -854,7 +855,7 @@ function set_stagePage(){
 			$("#easyStage2").attr("src", "Stage2Open.png");
 		}
 		else{
-			if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>6)&&(openedStage[1][0]==-1)){
+			if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>=6)&&(openedStage[1][0]==-1)){
 				openedStage[1][0]=0;
 				$("#mediumStage1").attr("src", "Stage1Open.png");
 			}
@@ -877,7 +878,7 @@ function set_stagePage(){
 			$("#easyStage3").attr("src", "Stage3Open.png");
 		}
 		else{
-			if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>6)&&(openedStage[1][0]==-1)){
+			if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>=6)&&(openedStage[1][0]==-1)){
 				openedStage[1][0]=0;
 				$("#mediumStage1").attr("src", "Stage1Open.png");
 			}
@@ -895,7 +896,7 @@ function set_stagePage(){
 	}
 
 	if(Lv==1&&stage==3){
-		if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>6)&&(openedStage[1][0]==-1)){
+		if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>=6)&&(openedStage[1][0]==-1)){
 			openedStage[1][0]=0;
 			$("#mediumStage1").attr("src", "Stage1Open.png");
 		}
@@ -917,7 +918,7 @@ function set_stagePage(){
 			$("#mediumStage2").attr("src", "Stage2Open.png");
 		}
 		else{
-			if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>6)&&(openedStage[2][0]==-1)){
+			if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>=6)&&(openedStage[2][0]==-1)){
 				openedStage[2][0]=0;
 				$("#hardStage1").attr("src", "Stage1Open.png");
 			}
@@ -940,7 +941,7 @@ function set_stagePage(){
 			$("#mediumStage3").attr("src", "Stage3Open.png");
 		}
 		else{
-			if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>6)&&(openedStage[2][0]==-1)){
+			if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>=6)&&(openedStage[2][0]==-1)){
 				openedStage[2][0]=0;
 				$("#hardStage1").attr("src", "Stage1Open.png");
 			}
@@ -958,7 +959,7 @@ function set_stagePage(){
 	}
 
 	if(Lv==2&&stage==3){
-		if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>6)&&(openedStage[2][0]==-1)){
+		if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>=6)&&(openedStage[2][0]==-1)){
 			openedStage[2][0]=0;
 			$("#hardStage1").attr("src", "Stage1Open.png");
 		}
@@ -1016,7 +1017,7 @@ function set_stagePage(){
 		else if(openedStage[2][2]==2){
 			$("#hardStage3Star").attr("src", "resultStar2.png");
 		}
-		else if(openedStage[2][0]==1){
+		else if(openedStage[2][2]==1){
 			$("#hardStage3Star").attr("src", "resultStar1.png");
 		}
 	}
@@ -1029,64 +1030,64 @@ function set_stage3Clear(){
 	$(".wearItem").css("display","none");
 	if(Lv==1){
 		$("#stage3Clear .background").attr("src","easyFinBG.png");
-		if(openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>6){
+		if(openedStage[0][0]>=2||openedStage[0][1]>=2||openedStage[0][2]>=2){
 			$("#fashion").attr("src","boy 1.png");
 			$("#stage3Clear .A").attr("src","finNaA.png");
+			if(openedStage[0][0]>=2){
+				$("#item-1-1").css("display","block");
+			}
+			if(openedStage[0][1]>=2){
+				$("#item-1-2").css("display","block");
+			}
+			if(openedStage[0][2]>=2){
+				$("#item-1-3").css("display","block");
+			}
 		}
 		else{
 			$("#fashion").attr("src","neoguul.png");
 			$("#nextLevel").html("다시 플레이하기");
 			$("#stage3Clear .A").attr("src","finNgA.png");
 		}
-		if(openedStage[0][0]==3){
-			$("#item-1-1").css("display","block");
-		}
-		if(openedStage[0][1]==3){
-			$("#item-1-2").css("display","block");
-		}
-		if(openedStage[0][2]==3){
-			$("#item-1-3").css("display","block");
-		}
 	}
 	else if(Lv==2){
 		$("#stage3Clear .background").attr("src","mediumFinBG.png");
-		if(openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>6){
+		if(openedStage[1][0]>=2||openedStage[1][1]>=2||openedStage[1][2]>=2){
 			$("#fashion").attr("src","boy 1.png");
 			$("#stage3Clear .A").attr("src","finNaA.png");
+			if(openedStage[1][0]>=2){
+				$("#item-2-1").css("display","block");
+			}
+			if(openedStage[1][1]>=2){
+				$("#item-2-2").css("display","block");
+			}
+			if(openedStage[1][2]>=2){
+				$("#item-2-3").css("display","block");
+			}
 		}else{
 			$("#fashion").attr("src","neoguul.png");
 			$("#nextLevel").html("다시 플레이하기");
 			$("#stage3Clear .A").attr("src","finNgA.png");
-		}
-		if(openedStage[1][0]==3){
-			$("#item-2-1").css("display","block");
-		}
-		if(openedStage[1][1]==3){
-			$("#item-2-2").css("display","block");
-		}
-		if(openedStage[1][2]==3){
-			$("#item-2-3").css("display","block");
 		}
 	}
 	else if(Lv==3){
 		$("#stage3Clear .background").attr("src","hardFinBG.png");
-		if(openedStage[2][0]+openedStage[2][1]+openedStage[2][2]>6){
+		if(openedStage[2][0]>=2||openedStage[2][1]>=2||openedStage[2][2]>=2){
 			$("#fashion").attr("src","boy 1.png");
-			$("#nextLevel").html("다시 플레이하기");
+			$("#nextLevel").html("");
 			$("#stage3Clear .A").attr("src","finNaA.png");
+			if(openedStage[2][0]>=2){
+				$("#item-3-1").css("display","block");
+			}
+			if(openedStage[2][1]>=2){
+				$("#item-3-2").css("display","block");
+			}
+			if(openedStage[2][2]>=2){
+				$("#item-3-3").css("display","block");
+			}
 		}else{
 			$("#fashion").attr("src","neoguul.png");
 			$("#nextLevel").html("다시 플레이하기");
 			$("#stage3Clear .A").attr("src","finNgA.png");
-		}
-		if(openedStage[2][0]==3){
-			$("#item-3-1").css("display","block");
-		}
-		if(openedStage[2][1]==3){
-			$("#item-3-2").css("display","block");
-		}
-		if(openedStage[2][2]==3){
-			$("#item-3-3").css("display","block");
 		}
 	}
 }
@@ -1346,16 +1347,17 @@ function init_drawBar(width){
 function drawBar(){
 	context.fillStyle = barcolor;
 	context.beginPath();
-	context.fillRect(bStart, cHeight- bHeight, bWidth, bHeight);
+	context.roundRect(bStart, cHeight- bHeight, bWidth, bHeight);
+
 }
 function drawCeiling(){
-	context.fillStyle = "#603000";
+	context.fillStyle = "#837156";
 	context.beginPath();
 	context.fillRect(0, 0, cWidth, h);
 }
 function init_drawBrick_lvl1(){
-	// timer = 60 + (stage-1) * 5;
-	timer =2;
+	timer = 60 + (stage-1) * 5;
+	// timer =2;
 	ROWS = 2+stage;
 	COLS = 6;
 	bricPadding = 5;
