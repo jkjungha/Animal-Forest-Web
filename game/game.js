@@ -324,7 +324,7 @@ $(document).ready(function(){
 			Lv=3;
 			stage=3;
 			hidePage= ".stagePage";
-			PLAY_3(3)
+			PLAY_3(3);
 		}
 	});
 
@@ -352,6 +352,7 @@ $(document).ready(function(){
 	$("#storyText3-1 p").on("click", function(){
 		Lv=3;
 		stage=1;
+		hidePage = "#HardStory1-2"
 		PLAY_3(1);
 	});
 
@@ -410,73 +411,45 @@ $(document).ready(function(){
 	//아이템 착용 결과창->각 난이도의 스테이지 선택창
 	$("#nextLevel").on("click", function(){
 		hidePage="#stage3Clear";
-		if(openedStage[0][0]<3&&openedStage[0][1]<3&&openedStage[0][2]<3){
-			if(Lv==1){
-				if(stage==1){
+		if(Lv==1){
+			if(openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>6){
+				PLAY_2(1);
+				Lv = 2;
+				stage = 1;
+			}else{
+				if(stage == 1){
 					PLAY_1(1);
-				}
-				else if(stage==2){
+				}else if(stage ==2){
 					PLAY_1(2);
-				}
-				else if(stage==3){
+				}else if(stage == 3){
 					PLAY_1(3);
 				}
 			}
-			else if(Lv==2){
-				if(stage==1){
+		}else if(Lv==2){
+			if(openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>6){
+				PLAY_3(1);
+				Lv = 2;
+				stage = 1;
+			}else{
+				if(stage == 1){
 					PLAY_2(1);
-				}
-				else if(stage==2){
+				}else if(stage ==2){
 					PLAY_2(2);
-				}
-				else if(stage==3){
-					PLAY_2(3);
-				}
-			}
-			else if(Lv==3){
-				if(stage==1){
-					PLAY_3(1);
-				}
-				else if(stage==2){
-					PLAY_3(2);
-				}
-				else if(stage==3){
-					PLAY_3(3);
+				}else if(stage == 3){
+					PLAY_2(3);			
 				}
 			}
-		}else{
-			if(Lv==1){
-				if(stage==1){
-					PLAY_1(2);
-				}
-				else if(stage==2){
-					PLAY_1(3);
-				}
-				else if(stage==3){
-					PLAY_2(1);
-				}
-			}
-			else if(Lv==2){
-				if(stage==1){
-					PLAY_2(2);
-				}
-				else if(stage==2){
-					PLAY_2(3);
-				}
-				else if(stage==3){
-					PLAY_3(1);
-				}
-			}
-			else if(Lv==3){
-				if(stage==1){
-					PLAY_3(2);
-				}
-				else if(stage==2){
-					PLAY_3(3);
-				}
+		}else if(Lv==3){
+			if(stage == 1){
+				PLAY_3(1);
+			}else if(stage ==2){
+				PLAY_3(2);
+			}else if(stage == 3){
+				PLAY_3(3);
 			}
 		}
 	});
+
 	$("#noNextLevel").on("click", function(){
 		hidePage="#stage3Clear";
 		if(Lv==1){
@@ -508,7 +481,7 @@ $(document).ready(function(){
 				showPage="#EasyStage2Game";
 			}
 			else if(stage==3){
-				showPage="#EasyStage3Game"
+				showPage="#EasyStage3Game";
 			}
 		}
 		else if(Lv==2){
@@ -827,7 +800,7 @@ function set_stagePage(){
 			$("#easyStage2").attr("src", "Stage2Open.png");
 		}
 		else{
-			if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]<=6)&&(openedStage[1][0]==-1)){
+			if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>6)&&(openedStage[1][0]==-1)){
 				openedStage[1][0]=0;
 				$("#mediumStage1").attr("src", "Stage1Open.png");
 			}
@@ -850,7 +823,7 @@ function set_stagePage(){
 			$("#easyStage3").attr("src", "Stage3Open.png");
 		}
 		else{
-			if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]<=6)&&(openedStage[1][0]==-1)){
+			if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>6)&&(openedStage[1][0]==-1)){
 				openedStage[1][0]=0;
 				$("#mediumStage1").attr("src", "Stage1Open.png");
 			}
@@ -868,7 +841,7 @@ function set_stagePage(){
 	}
 
 	if(Lv==1&&stage==3){
-		if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]<=6)&&(openedStage[1][0]==-1)){
+		if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>6)&&(openedStage[1][0]==-1)){
 			openedStage[1][0]=0;
 			$("#mediumStage1").attr("src", "Stage1Open.png");
 		}
@@ -890,7 +863,7 @@ function set_stagePage(){
 			$("#mediumStage2").attr("src", "Stage2Open.png");
 		}
 		else{
-			if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]<=6)&&(openedStage[2][0]==-1)){
+			if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>6)&&(openedStage[2][0]==-1)){
 				openedStage[2][0]=0;
 				$("#hardStage1").attr("src", "Stage1Open.png");
 			}
@@ -913,7 +886,7 @@ function set_stagePage(){
 			$("#mediumStage3").attr("src", "Stage3Open.png");
 		}
 		else{
-			if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]<=6)&&(openedStage[2][0]==-1)){
+			if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>6)&&(openedStage[2][0]==-1)){
 				openedStage[2][0]=0;
 				$("#hardStage1").attr("src", "Stage1Open.png");
 			}
@@ -931,7 +904,7 @@ function set_stagePage(){
 	}
 
 	if(Lv==2&&stage==3){
-		if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>=6)&&(openedStage[2][0]==-1)){
+		if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>6)&&(openedStage[2][0]==-1)){
 			openedStage[2][0]=0;
 			$("#hardStage1").attr("src", "Stage1Open.png");
 		}
@@ -1002,14 +975,14 @@ function set_stage3Clear(){
 	$(".wearItem").css("display","none");
 	if(Lv==1){
 		$("#stage3Clear .background").attr("src","easyFinBG.png");
-		if(openedStage[0][0]<3&&openedStage[0][1]<3&&openedStage[0][2]<3){
+		if(openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>6){
+			$("#fashion").attr("src","boy 1.png");
+			$("#stage3Clear .A").attr("src","finNaA.png");
+		}
+		else{
 			$("#fashion").attr("src","neoguul.png");
 			$("#nextLevel").html("다시 플레이하기");
 			$("#stage3Clear .A").attr("src","finNgA.png");
-		}
-		else{
-			$("#fashion").attr("src","boy 1.png");
-			$("#stage3Clear .A").attr("src","finNaA.png");
 		}
 		if(openedStage[0][0]==3){
 			$("#item-1-1").css("display","block");
@@ -1023,14 +996,13 @@ function set_stage3Clear(){
 	}
 	else if(Lv==2){
 		$("#stage3Clear .background").attr("src","mediumFinBG.png");
-		if(openedStage[1][0]<3&&openedStage[1][1]<3&&openedStage[1][2]<3){
+		if(openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>6){
+			$("#fashion").attr("src","boy 1.png");
+			$("#stage3Clear .A").attr("src","finNaA.png");
+		}else{
 			$("#fashion").attr("src","neoguul.png");
 			$("#nextLevel").html("다시 플레이하기");
 			$("#stage3Clear .A").attr("src","finNgA.png");
-		}
-		else{
-			$("#fashion").attr("src","boy 1.png");
-			$("#stage3Clear .A").attr("src","finNaA.png");
 		}
 		if(openedStage[1][0]==3){
 			$("#item-2-1").css("display","block");
@@ -1044,15 +1016,14 @@ function set_stage3Clear(){
 	}
 	else if(Lv==3){
 		$("#stage3Clear .background").attr("src","hardFinBG.png");
-		if(openedStage[2][0]<3&&openedStage[2][1]<3&&openedStage[2][2]<3){
-			$("#fashion").attr("src","neoguul.png");
-			$("#nextLevel").html("다시 플레이하기");
-			$("#stage3Clear .A").attr("src","finNgA.png");
-		}
-		else{
+		if(openedStage[2][0]+openedStage[2][1]+openedStage[2][2]>6){
 			$("#fashion").attr("src","boy 1.png");
 			$("#nextLevel").html("다시 플레이하기");
 			$("#stage3Clear .A").attr("src","finNaA.png");
+		}else{
+			$("#fashion").attr("src","neoguul.png");
+			$("#nextLevel").html("다시 플레이하기");
+			$("#stage3Clear .A").attr("src","finNgA.png");
 		}
 		if(openedStage[2][0]==3){
 			$("#item-3-1").css("display","block");
@@ -1240,7 +1211,7 @@ function barReflection(alpha) {
 		var angle = Math.atan(vector[1]/vector[0]);
 		angle = angle * (1 + alpha);
 		if (Math.abs(angle) < Math.PI/6) {
-			angle = Math.PI/6
+			angle = Math.PI/6;
 		}
 		vector = [ Math.cos(angle), -Math.sin(angle) ];
 	}
@@ -1249,7 +1220,7 @@ function barReflection(alpha) {
 		var angle = Math.atan(vector[1]/vector[0]);
 		angle = angle * (1 - alpha);
 		if (Math.abs(angle) < Math.PI/6) {
-			angle = Math.PI/6
+			angle = Math.PI/6;
 		}
 		vector = [ -Math.cos(angle), -Math.sin(angle) ];
 	}
@@ -1329,7 +1300,8 @@ function drawCeiling(){
 	context.fillRect(0, 0, cWidth, h);
 }
 function init_drawBrick_lvl1(){
-	timer = 60 + (stage-1) * 5;
+	// timer = 60 + (stage-1) * 5;
+	timer =2;
 	ROWS = 2+stage;
 	COLS = 6;
 	bricPadding = 5;
