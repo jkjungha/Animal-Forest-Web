@@ -185,6 +185,60 @@ $(document).ready(function(){
 			PLAY_1(3);
 		}
 	});
+	$("#easyStage1").mouseover(function(){
+      $(".stage1Text").css("text-shadow", "2px 2px 4px gray");
+   })
+   $("#easyStage1").mouseout(function(){
+      $(".stage1Text").css("text-shadow", "none");
+   })
+   $("#easyStage2").mouseover(function(){
+      $(".stage2Text").css("text-shadow", "2px 2px 4px gray");
+   })
+   $("#easyStage2").mouseout(function(){
+      $(".stage2Text").css("text-shadow", "none");
+   })
+   $("#easyStage3").mouseover(function(){
+      $(".stage3Text").css("text-shadow", "2px 2px 4px gray");
+   })
+   $("#easyStage3").mouseout(function(){
+      $(".stage3Text").css("text-shadow", "none");
+   })
+   $("#mediumStage1").mouseover(function(){
+      $(".stage1Text").css("text-shadow", "2px 2px 4px gray");
+   })
+   $("#mediumStage1").mouseout(function(){
+      $(".stage1Text").css("text-shadow", "none");
+   })
+   $("#mediumStage2").mouseover(function(){
+      $(".stage2Text").css("text-shadow", "2px 2px 4px gray");
+   })
+   $("#mediumStage2").mouseout(function(){
+      $(".stage2Text").css("text-shadow", "none");
+   })
+   $("#mediumStage3").mouseover(function(){
+      $(".stage3Text").css("text-shadow", "2px 2px 4px gray");
+   })
+   $("#mediumStage3").mouseout(function(){
+      $(".stage3Text").css("text-shadow", "none");
+   })
+   $("#hardStage1").mouseover(function(){
+      $(".stage1Text").css("text-shadow", "2px 2px 4px gray");
+   })
+   $("#hardStage1").mouseout(function(){
+      $(".stage1Text").css("text-shadow", "none");
+   })
+   $("#hardStage2").mouseover(function(){
+      $(".stage2Text").css("text-shadow", "2px 2px 4px gray");
+   })
+   $("#hardStage2").mouseout(function(){
+      $(".stage2Text").css("text-shadow", "none");
+   })
+   $("#hardStage3").mouseover(function(){
+      $(".stage3Text").css("text-shadow", "2px 2px 4px gray");
+   })
+   $("#hardStage3").mouseout(function(){
+      $(".stage3Text").css("text-shadow", "none");
+   })
 
 
 	/******************************/
