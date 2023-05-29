@@ -1124,7 +1124,6 @@ function draw() {
 	if (delayTime == 0) {
 		ballX += velocity*vector[0];
 		ballY += velocity*vector[1];
-
 	}
 
 	if(timer <= 0){

@@ -21,7 +21,7 @@
 	<!--게임 방법-->
 	<div class="page" id="methodPage">
 		
-		<img src="methodBackground.png" class="background">
+		<img src="methodBackground.jpg" class="background" height="800px">
 		<img src="methodBanner.png" class="banner">
 		
 		<div>
@@ -49,7 +49,7 @@
 	<!--레벨 선택-->
 	<div class="page" id="levelPage">
 		<img src="levelBanner.png" class="banner">
-		<img src="methodBackground.png" class="background">
+		<img src="methodBackground.jpg" class="background" height="800px">
 		<table id="levelTable">
 			<tr>
 				<td>
@@ -77,67 +77,166 @@
 	</div>
 	<!--------------------->
 
+	<!--환경설정 화면 -->
+	<div id="page" class="settingsPage">
+		<img src="methodBackground.jpg" class="background" height="800px">
+		<img src="settingsBanner.png" class="banner">
+		
+		<table class="settingsTable">
+			<tr class="ballsize">
+				<td>
+					<img src="ballsize.png" class="set">
+				</td>
+				<td>
+					<img src="finger.png" id="fingerc" class="finger">
+					<img src="cherry.png" id="cherry" class="set">
+				</td>
+				<td>
+					<img src="finger.png" id="fingero" class="finger">
+					<img src="orange.png" id="orange" class="set">
+				</td>
+				<td>
+					<img src="finger.png" id="fingerp" class="finger">
+					<img src="peach.png" id="peach" class="set">
+				</td>
+				<td>
+					<img src="finger.png" id="fingera" class="finger">
+					<img src="apple.png" id="apple" class="set">
+				</td>
+			</tr>
+			<tr class="barcolor">
+				<td>
+					<img src="barcolor.png"  class="set">
+				</td>
+				<td>
+					<img src="finger.png" id="finger4" class="finger">
+					<img src="Ellipse 4.png" id="color4" class="set">
+				</td>
+				<td>
+					<img src="finger.png" id="finger5" class="finger">
+					<img src="Ellipse 5.png" id="color5" class="set">
+				</td>
+				<td>
+					<img src="finger.png" id="finger6" class="finger">
+					<img src="Ellipse 6.png" id="color6" class="set">
+				</td>
+				<td>
+					<img src="finger.png" id="finger7" class="finger">
+					<img src="Ellipse 7.png" id="color7" class="set">
+				</td>
+			</tr>
+			<tr class="musicmute">
+				<td>
+					<img src="music.png" class="set">
+				</td>
+				<td colspan="2"> 
+					<img src="finger.png" id="fingeron" class="finger">
+					<img src="on.png" id="switchon" class="set">
+				</td>
+				<td colspan="2"> 
+					<img src="finger.png" id="fingeroff" class="finger">
+					<img src="off.png" id="switchoff" class="set">
+				</td>
+			</tr>
+		</table>
+		<img src="goBackButton_n.png" class="settingsback">
+	</div>
+	<!--------------------->
+
 
 	<!------scorePage------>
 	<div class="outroPage" id="resultPage">
-		<h1>결과</h1>
+		<img src="" class="background" height="800px">
+		<img src="resultBanner.png" class="banner">
+		<img src="scoreContainer.png" id="scoreContainer">
+		<img src="itemContainer.png" id="itemContainer">
 		<img src="resultStar1.png" id="starPrint">
-		<p id="scorePrint"></p>
-		<p id="timePrint"></p>
-		<p id="corePrint"></p>
+		<div id="totalPrint">
+			<p id="scorePrint"></p>
+			<p id="timePrint"></p>
+		</div>
 		<div id="itemBox">
-			<p>얻은 아이템</p>
-			<img src="levelLeaf.png" id="item">
+			<img src="" id="item" height="">
 		</div>
 		<img src="okayButton_n.png" class="okayButton" id="ok_clearButton">
 	</div>
 	<!------FailPage------->
 	<div class="outroPage" id="failPage">
-		<h1>실패</h1>
+		<img src="failPageBG.png" class="background" height="800px">
+		<img src="resultBanner.png" class="banner">
+		<img src="failA.png" class="A">
 		<img src="okayButton_n.png" class="okayButton" id="ok_failButton">
 	</div>
 	<!--------------------->
 
 
-	<!--얻은 아이템 착용샷 보여주는 페이지-->
+	<!--얻은 아이템 착용샷 보여주는 페이지-->   
 	<div class="page" id="stage3Clear">
+		<img src="" class="background" height="800px">
+		<img src="" class="A">
 		<div >
-			<p>어쩌구 저쩌구</p>
-			<p>얻은 아이템</p>
-			<p id="itemPrint"></p>
-			<img src="boy 1.png" id="fashion">
-			<img src="sunglass 1.png" id="item-1-1" class="wearItem">
-			<img src="flower 1.png" id="item-1-2" class="wearItem">
-			<img src="umbrella 1.png" id="item-1-3" class="wearItem">
-			<img src="cucumber 1.png" id="item-2-1" class="wearItem">
-			<img src="rose 1.png" id="item-2-2" class="wearItem">
-			<img src="boba 1.png" id="item-2-3" class="wearItem">
-			<img src="ukelele 1.png" id="item-3-1" class="wearItem">
-			<img src="hairpin 1.png" id="item-3-2" class="wearItem">
-			<img src="sunglasses 1.png" id="item-3-3" class="wearItem">
+			<img src="" id="fashion">
+			<img src="item1-1.png" id="item-1-1" class="wearItem">
+			<img src="item1-2.png" id="item-1-2" class="wearItem">
+			<img src="item1-3.png" id="item-1-3" class="wearItem">
+			<img src="item2-1.png" id="item-2-1" class="wearItem">
+			<img src="item2-2.png" id="item-2-2" class="wearItem">
+			<img src="item2-3.png" id="item-2-3" class="wearItem">
+			<img src="item3-1.png" id="item-3-1" class="wearItem">
+			<img src="item3-2.png" id="item-3-2" class="wearItem">
+			<img src="item3-3.png" id="item-3-3" class="wearItem">
 		</div>
-		<img src="okayButton_n.png" id="nextLevel">
+		<img src="B.png" class="B">
+		<div id="Text" class="ST">
+			<p id="nextLevel">다음 단계 플레이하기</p>
+			<p id="noNextLevel">오늘은 그만할래</p>
+		</div>
+		<img src="arrow.png" class="arrow" id="nextLevel">
 	</div>
 	<!--------------------->
 
 
 	<!--easy: stage 선택-->
 	<div id="easyStagePage" class="stagePage">
-		<p>EASY</p>
-		<table>
+		<img src="stageBanner.png" class="banner">
+		<img src="methodBackground.jpg" class="background" height="800px">
+		<p class="stageTitle" id="stageEasyTitle">EASY</p>
+		<table class="stageTable">
 			<tr>
 				<td>
-					<img src="Stage1Open.png" id="easyStage1">
+					<img src="Stage1Open.png" id="easyStage1" class="stage">
 				</td>
 				<td>
-					<img src="StageLock.png" id="easyStage2">
+					<img src="StageLock.png" id="easyStage2" class="stage">
 				</td>
 				<td>
-					<img src="StageLock.png" id="easyStage3">
+					<img src="StageLock.png" id="easyStage3" class="stage">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p class="stage1Text">Stage 1</p>
+				</td>
+				<td>
+					<p class="stage2Text">Stage 2</p>
+				</td>
+				<td>
+					<p class="stage3Text">Stage 3</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="" id="easyStage1Star" class="stageStar">
+				</td>
+				<td>
+					<img src="" id="easyStage2Star" class="stageStar">
+				</td>
+				<td>
+					<img src="" id="easyStage3Star" class="stageStar">
 				</td>
 			</tr>
 		</table>
-		<img src="goBackButton.png" class="goBackButton">
+		<img src="goBackButton_n.png" class="goBackButton">
 	</div>
 	<!--------------------->
 
@@ -174,44 +273,68 @@
 	<!---easy: Game--->
 	<div class="gamePage" id="EasyStage1Game">
 		<p>게임진행 easy-1</p>
-		<canvas id="myCanvas1-1" width="1000" height="600"></canvas>
-		<button class="clearButton">성공</button>
-		<button class="failButton">실패</button>
+		<canvas id="myCanvas1-1" width="1125" height="800"></canvas>
+		<img src="settings.png" id="settings">
+		<canvas id="scorebanner" width="220"; height="200"></canvas>
 	</div>
 
 	<div class="gamePage" id="EasyStage2Game">
 		<p>게임진행 easy-2</p>
-		<canvas id="myCanvas1-2" width="1000" height="600"></canvas>
-		<button class="clearButton">성공</button>
-		<button class="failButton">실패</button>
+		<canvas id="myCanvas1-2" width="1125" height="800"></canvas>
+		<img src="settings.png" id="settings">
+		<canvas id="scorebanner" width="220"; height="200"></canvas>
 	</div>
 
 	<div class="gamePage" id="EasyStage3Game">
 		<p>게임진행 easy-3</p>
-		<canvas id="myCanvas1-3" width="1000" height="600"></canvas>
-		<button class="clearButton">성공</button>
-		<button class="failButton">실패</button>
+		<canvas id="myCanvas1-3" width="1125" height="800"></canvas>
+		<img src="settings.png" id="settings">
+		<canvas id="scorebanner" width="220"; height="200"></canvas>
 	</div>
 	<!--------------------->
 
 
 	<!--medium: stage -->
 	<div id="mediumStagePage" class="stagePage">
-		<p>MEDIUM</p>
-		<table>
+		<img src="stageBanner.png" class="banner">
+		<img src="methodBackground.jpg" class="background" height="800px">
+		<p class="stageTitle" id="stageMediTitle">MEDIUM</p>
+		<table class="stageTable">
 			<tr>
 				<td>
-					<img src="StageLock.png" id="mediumStage1">
+					<img src="StageLock.png" id="mediumStage1" class="stage">
 				</td>
 				<td>
-					<img src="StageLock.png" id="mediumStage2">
+					<img src="StageLock.png" id="mediumStage2" class="stage">
 				</td>
 				<td>
-					<img src="StageLock.png" id="mediumStage3">
+					<img src="StageLock.png" id="mediumStage3" class="stage">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p class="stage1Text">Stage 1</p>
+				</td>
+				<td>
+					<p class="stage2Text">Stage 2</p>
+				</td>
+				<td>
+					<p class="stage3Text">Stage 3</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="" id="mediumStage1Star" class="stageStar">
+				</td>
+				<td>
+					<img src="" id="mediumStage2Star" class="stageStar">
+				</td>
+				<td>
+					<img src="" id="mediumStage3Star" class="stageStar">
 				</td>
 			</tr>
 		</table>
-		<img src="goBackButton.png" class="goBackButton">
+		<img src="goBackButton_n.png" class="goBackButton">
 	</div>
 	<!--------------------->
 
@@ -219,8 +342,15 @@
 	<!--medium: story -->
 	<div class="page" id="MediumStory1-1">
 		<img src="medium1-1BG.png" class="background">
-		<img src="medium1-1phone_C.png" class="phone" id="phone_C">
-		<img src="medium1-1phone_A.png" class="phone" id="phone_A">
+		<img src="medium1-1phone_C_n.png" class="phone" id="phone_C">
+		<img src="medium1-1phone_A_n.png" class="phone" id="phone_A">
+		<div id="mediumStoryB">
+			<img src="B.png" class="B">
+			<div id="storyText2-1" class="ST">
+				<p>전화를 받자</p>
+				<p>누구지?</p>
+			</div>
+		</div>
 		<p>너에게 거부할 권리는 없단다^^.</p>
 	</div>
 
@@ -239,44 +369,68 @@
 	<!--medium: game -->
 	<div class="gamePage" id="MediumStage1Game">
 		<p>게임진행 medium-1</p>
-		<canvas id="myCanvas2-1" width="1000" height="600"></canvas>
-		<button class="clearButton">성공</button>
-		<button class="failButton">실패</button>
+		<canvas id="myCanvas2-1" width="1125" height="800"></canvas>
+		<img src="settings.png" id="settings">
+		<canvas id="scorebanner" width="220"; height="200"></canvas>
 	</div>
 
 	<div class="gamePage" id="MediumStage2Game">
 		<p>게임진행 medium-2</p>
-		<canvas id="myCanvas2-2" width="1000" height="600"></canvas>
-		<button class="clearButton">성공</button>
-		<button class="failButton">실패</button>
+		<canvas id="myCanvas2-2" width="1125" height="800"></canvas>
+		<img src="settings.png" id="settings">
+		<canvas id="scorebanner" width="220"; height="200"></canvas>
 	</div>
 
 	<div class="gamePage" id="MediumStage3Game">
 		<p>게임진행 medium-3</p>
-		<canvas id="myCanvas2-3" width="1000" height="600"></canvas>
-		<button class="clearButton">성공</button>
-		<button class="failButton">실패</button>
+		<canvas id="myCanvas2-3" width="1125" height="800"></canvas>
+		<img src="settings.png" id="settings">
+		<canvas id="scorebanner" width="220"; height="200"></canvas>
 	</div>
 	<!--------------------->
 
 
 	<!--hard: stage 선택-->
 	<div id="hardStagePage" class="stagePage">
-		<p>HARD</p>
-		<table>
+		<img src="stageBanner.png" class="banner">
+		<img src="methodBackground.jpg" class="background" height="800px">
+		<p class="stageTitle" id="stageHardTitle">HARD</p>
+		<table class="stageTable">
 			<tr>
 				<td>
-					<img src="StageLock.png" id="hardStage1">
+					<img src="StageLock.png" id="hardStage1" class="stage">
 				</td>
 				<td>
-					<img src="StageLock.png" id="hardStage2">
+					<img src="StageLock.png" id="hardStage2" class="stage">
 				</td>
 				<td>
-					<img src="StageLock.png" id="hardStage3">
+					<img src="StageLock.png" id="hardStage3" class="stage">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p class="stage1Text">Stage 1</p>
+				</td>
+				<td>
+					<p class="stage2Text">Stage 2</p>
+				</td>
+				<td>
+					<p class="stage3Text">Stage 3</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<img src="" id="hardStage1Star" class="stageStar">
+				</td>
+				<td>
+					<img src="" id="hardStage2Star" class="stageStar">
+				</td>
+				<td>
+					<img src="" id="hardStage3Star" class="stageStar">
 				</td>
 			</tr>
 		</table>
-		<img src="goBackButton.png" class="goBackButton">
+		<img src="goBackButton_n.png" class="goBackButton">
 	</div>
 	<!--------------------->
 
@@ -284,7 +438,19 @@
 	<!--hard: story -->
 	<div class="page" id="HardStory1-1">
 		<img src="hard1-1BG.png" class="background">
-		<img src="goodButton_n.png" id="goodButton">
+		<img src="msgButton_n.png" id="msgButton">
+		<img src="finger.png" id="finger">
+	</div>
+
+	<div class="page" id="HardStory1-2">
+		<img src="hard1-2BG.png" class="background">
+		<div id="hardStoryB">
+			<img src="B.png" class="B">
+			<div id="storyText3-1" class="ST">
+				<p>그래!</p>
+				<p>그러지 뭐...</p>
+			</div>
+		</div>
 	</div>
 
 	<!--------------------->
@@ -293,23 +459,23 @@
 	<!--hard: game -->
 	<div class="gamePage" id="HardStage1Game">
 		<p>게임진행 hard-1</p>
-		<canvas id="myCanvas3-1" width="1000" height="600"></canvas>
-		<button class="clearButton">성공</button>
-		<button class="failButton">실패</button>
+		<canvas id="myCanvas3-1" width="1125" height="800"></canvas>
+		<img src="settings.png" id="settings">
+		<canvas id="scorebanner" width="220"; height="200"></canvas>
 	</div>
 
 	<div class="gamePage" id="HardStage2Game">
 		<p>게임진행 hard-2</p>
-		<canvas id="myCanvas3-2" width="1000" height="600"></canvas>
-		<button class="clearButton">성공</button>
-		<button class="failButton">실패</button>
+		<canvas id="myCanvas3-2" width="1125" height="800"></canvas>
+		<img src="settings.png" id="settings">
+		<canvas id="scorebanner" width="220"; height="200"></canvas>
 	</div>
 
 	<div class="gamePage" id="HardStage3Game">
 		<p>게임진행 hard-3</p>
-		<canvas id="myCanvas3-3" width="1000" height="600"></canvas>
-		<button class="clearButton">성공</button>
-		<button class="failButton">실패</button>
+		<canvas id="myCanvas3-3" width="1125" height="800"></canvas>
+		<img src="settings.png" id="settings">
+		<canvas id="scorebanner" width="220"; height="200"></canvas>
 	</div>
 	
 
