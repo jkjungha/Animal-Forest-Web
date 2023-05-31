@@ -21,9 +21,10 @@
 	<!--게임 방법-->
 	<div class="page" id="methodPage">
 		
-		<img src="methodBackground.jpg" class="background" height="800px">
+		<img src="methodBackground.png" class="background" height="800px">
 		<img src="methodBanner.png" class="banner">
-		
+		<img src="methodArrow.png" class="methodArrow">
+		<!-- 
 		<div>
 			<p class="text" id="methodText_1">
 				과일을 이용해서 벽돌을 깨서<br>
@@ -39,7 +40,7 @@
 				할 수 있어요.
 			</p>
 		</div>
-
+ -->
       	<img src="startButton_n.png" class="startButton" id="startButton_m">  	
 	</div>
 	<!------------------>
@@ -74,6 +75,7 @@
 				</td>
 			</tr>
 		</table>
+		<img src="goBackButton_n.png" class="goToStart">
 	</div>
 	<!--------------------->
 
@@ -139,7 +141,7 @@
 				</td>
 			</tr>
 		</table>
-		<img src="goBackButton_n.png" class="settingsback">
+		<img src="goBackButton_n.png" class="settingsBack">
 	</div>
 	<!--------------------->
 
@@ -190,7 +192,9 @@
 		<div id="Text" class="ST">
 			<p id="nextLevel">다음 단계 플레이하기</p>
 			<p id="noNextLevel">오늘은 그만할래</p>
-		</div>	</div>
+		</div>
+		<p>다음 레벨로 가려면 별 7개가 필요해</p>
+	</div>
 	<!--------------------->
 
 
@@ -271,23 +275,26 @@
 	<!---easy: Game--->
 	<div class="gamePage" id="EasyStage1Game">
 		<p>게임진행 easy-1</p>
-		<canvas id="myCanvas1-1" width="1125" height="800"></canvas>
-		<img src="settings.png" id="settings">
-		<canvas id="scorebanner" width="220"; height="200"></canvas>
+		<canvas id="myCanvas1-1" width="1125" height="775"></canvas>
+		<img src="settings.png" class="settings">
+		<img src="resultStar0.png" class="gameStar">
+		<canvas class="scorebanner" width="220" height="200"></canvas>
 	</div>
 
 	<div class="gamePage" id="EasyStage2Game">
 		<p>게임진행 easy-2</p>
-		<canvas id="myCanvas1-2" width="1125" height="800"></canvas>
-		<img src="settings.png" id="settings">
-		<canvas id="scorebanner" width="220"; height="200"></canvas>
+		<canvas id="myCanvas1-2" width="1125" height="775"></canvas>
+		<img src="settings.png" class="settings">
+		<img src="resultStar0.png" class="gameStar">
+		<canvas class="scorebanner" width="220" height="200"></canvas>
 	</div>
 
 	<div class="gamePage" id="EasyStage3Game">
 		<p>게임진행 easy-3</p>
-		<canvas id="myCanvas1-3" width="1125" height="800"></canvas>
-		<img src="settings.png" id="settings">
-		<canvas id="scorebanner" width="220"; height="200"></canvas>
+		<canvas id="myCanvas1-3" width="1125" height="775"></canvas>
+		<img src="settings.png" class="settings">
+		<img src="resultStar0.png" class="gameStar">
+		<canvas class="scorebanner" width="220" height="200"></canvas>
 	</div>
 	<!--------------------->
 
@@ -367,23 +374,26 @@
 	<!--medium: game -->
 	<div class="gamePage" id="MediumStage1Game">
 		<p>게임진행 medium-1</p>
-		<canvas id="myCanvas2-1" width="1125" height="800"></canvas>
-		<img src="settings.png" id="settings">
-		<canvas id="scorebanner" width="220"; height="200"></canvas>
+		<canvas id="myCanvas2-1" width="1125" height="775"></canvas>
+		<img src="settings.png" class="settings">
+		<img src="resultStar0.png" class="gameStar">
+		<canvas class="scorebanner" width="220" height="200"></canvas>
 	</div>
 
 	<div class="gamePage" id="MediumStage2Game">
 		<p>게임진행 medium-2</p>
-		<canvas id="myCanvas2-2" width="1125" height="800"></canvas>
-		<img src="settings.png" id="settings">
-		<canvas id="scorebanner" width="220"; height="200"></canvas>
+		<canvas id="myCanvas2-2" width="1125" height="775"></canvas>
+		<img src="settings.png" class="settings">
+		<img src="resultStar0.png" class="gameStar">
+		<canvas class="scorebanner" width="220" height="200"></canvas>
 	</div>
 
 	<div class="gamePage" id="MediumStage3Game">
 		<p>게임진행 medium-3</p>
-		<canvas id="myCanvas2-3" width="1125" height="800"></canvas>
-		<img src="settings.png" id="settings">
-		<canvas id="scorebanner" width="220"; height="200"></canvas>
+		<canvas id="myCanvas2-3" width="1125" height="775"></canvas>
+		<img src="settings.png" class="settings">
+		<img src="resultStar0.png" class="gameStar">
+		<canvas class="scorebanner" width="220" height="200"></canvas>
 	</div>
 	<!--------------------->
 
@@ -457,23 +467,26 @@
 	<!--hard: game -->
 	<div class="gamePage" id="HardStage1Game">
 		<p>게임진행 hard-1</p>
-		<canvas id="myCanvas3-1" width="1125" height="800"></canvas>
-		<img src="settings.png" id="settings">
-		<canvas id="scorebanner" width="220"; height="200"></canvas>
+		<canvas id="myCanvas3-1" width="1125" height="775"></canvas>
+		<img src="settings.png" class="settings">
+		<img src="resultStar0.png" class="gameStar">
+		<canvas class="scorebanner" width="220" height="200"></canvas>
 	</div>
 
 	<div class="gamePage" id="HardStage2Game">
 		<p>게임진행 hard-2</p>
-		<canvas id="myCanvas3-2" width="1125" height="800"></canvas>
-		<img src="settings.png" id="settings">
-		<canvas id="scorebanner" width="220"; height="200"></canvas>
+		<canvas id="myCanvas3-2" width="1125" height="775"></canvas>
+		<img src="settings.png" class="settings">
+		<img src="resultStar0.png" class="gameStar">
+		<canvas class="scorebanner" width="220" height="200"></canvas>
 	</div>
 
 	<div class="gamePage" id="HardStage3Game">
 		<p>게임진행 hard-3</p>
-		<canvas id="myCanvas3-3" width="1125" height="800"></canvas>
-		<img src="settings.png" id="settings">
-		<canvas id="scorebanner" width="220"; height="200"></canvas>
+		<canvas id="myCanvas3-3" width="1125" height="775"></canvas>
+		<img src="settings.png" class="settings">
+		<img src="resultStar0.png" class="gameStar">
+		<canvas class="scorebanner" width="220" height="200"></canvas>
 	</div>
 	
 

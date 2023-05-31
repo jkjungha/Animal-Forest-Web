@@ -33,7 +33,7 @@ canvas {
 .gamePage canvas, .gamePage img{
     position: absolute;
 }
-.gamePage #settings{
+.gamePage .settings{
     width: 120px;
     height: auto;
     left: 20px;
@@ -131,10 +131,15 @@ video{
 #startButton_m{
     position: absolute;
     height: 85px;
-    bottom: 50px;
-    right: 50px;
+    bottom: 30px;
+    right: 400px;
 }
-/*******환경서정*******/
+.methodArrow{
+    position: absolute;
+    top: 10px;
+    left: 40px;
+}
+/*******환경설정*******/
 .settingsTable{
     margin-right: 30px;
     position: absolute;
@@ -147,8 +152,8 @@ video{
     vertical-align : middle;
 }
 .settingsTable tr:nth-child(3){
-   position: absolute;
-   top: 330px;
+ position: absolute;
+ top: 330px;
 }
 .settingsTable tr:nth-child(3) td:nth-child(2){
     padding: 0 100px 0 200px;
@@ -156,7 +161,7 @@ video{
 .settingsTable tr:nth-child(3) td:nth-child(3){
     padding: 0 100px 0 100px;
 }
-.settingsback{
+.settingsBack{
     position: absolute;
     height: 85px;
     left: 421px;
@@ -212,7 +217,12 @@ video{
     left: 300px;
     
 }
-
+.goToStart{
+    position: absolute;
+    height: 85px;
+    left: 421px;
+    bottom: 50px;
+}
 #itemContainer{
     position: absolute;
     width: 330px;
@@ -314,7 +324,16 @@ video{
     left: 660px;
 }
 /*********스테이지 선택화면*********/
-
+.gameStar{
+   width: 240px;
+   height: auto;
+   top: 40px;
+   left: 600px;
+}
+.scorebanner{
+    position: absolute;
+    
+}
 .stageTitle{
     position: absolute;
     font-size: 40px;
@@ -453,5 +472,13 @@ B: 나의 대답이 출력되는 말풍선
 
 .wearItem{
     display: none;
+}
+
+#stage3Clear>p{
+    position: absolute;
+    background-color: white;
+    display: none;
+    top: 390px;
+    left: 775px;
 }
 

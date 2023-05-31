@@ -9,9 +9,9 @@ var Lv=0;
 var stage=0;
 
 var openedStage = [[0,-1,-1],[-1,-1,-1],[-1,-1,-1]];
-var scoreLV1 = 400;
-var scoreLV2 = 600;
-var scoreLV3 = 1000;
+var scoreLV = [400, 800, 1200];
+
+var failcheck = false;
 
 
 //---------> 디자인
@@ -26,6 +26,9 @@ var timer;
 var TIME;
 var PLAY;
 var GAMEDELAY;
+var STARTIMER = false;
+var STARCOREHIT = false;
+var STARSCORE = false;
 var delayTime;
 var cWidth;
 var cHeight;
@@ -57,8 +60,10 @@ var brick3 = new Image();
 brick3.src = "brick3.png";
 var corebrick = new Image();
 corebrick.src = "corebrick.png";
-var present = new Image();
-present.src = "present.png";
+var scorebrick = new Image();
+scorebrick.src = "scorebrick.png";
+var deburfbrick = new Image();
+deburfbrick.src = "deburfbrick.png";
 var ball = new Image();
 ball.src = "peach.png";
 var ceiling = new Image();
@@ -158,7 +163,24 @@ $(document).ready(function(){
 	$(".goBackButton").mouseout(function(){
 		$(".goBackButton").attr("src", "goBackButton_n.png");
 	});
+	$(".goToStart").on("click", function(){
+		hidePage= "#levelPage";
+		showPage = "#startPage";
+		move_to_NextPage();
+	});
 
+	$(".methodArrow").on("click", function(){
+		hidePage= "#methodPage";
+		showPage = "#startPage";
+		move_to_NextPage();
+	});
+
+	$(".goToStart").mouseover(function(){
+		$(".goToStart").attr("src", "goBackButton_mo.png");
+	});
+	$(".goToStart").mouseout(function(){
+		$(".goToStart").attr("src", "goBackButton_n.png");
+	});
 	$("#easyStage1").mouseover(function(){
 		$(".stage1Text").css("text-shadow", "2px 2px 4px gray");
 	})
@@ -420,7 +442,9 @@ $(document).ready(function(){
 	$("#ok_clearButton").on("click", function(){
 		$("#item").attr("src", "");
 		set_stagePage();
+		
 		hidePage="#resultPage";
+		/*
 		if(stage!=3){
 			if(Lv==1){
 				showPage="#easyStagePage";
@@ -432,10 +456,11 @@ $(document).ready(function(){
 				showPage="#hardStagePage"; 
 			}
 		}
-		else{
-			set_stage3Clear();
-			showPage="#stage3Clear";
-		}
+		else{*/
+
+		set_stage3Clear();
+		showPage="#stage3Clear";
+		//}
 		audio.pause();
 		move_to_NextPage();
 	});
@@ -449,6 +474,7 @@ $(document).ready(function(){
 	//실패창->각 난이도의 스테이지 선택창
 	$("#ok_failButton").on("click", function(){
 		hidePage="#failPage";
+		failcheck=true;
 		set_stage3Clear();
 		showPage="#stage3Clear";
 		audio.pause();
@@ -465,41 +491,100 @@ $(document).ready(function(){
 	//아이템 착용 결과창->각 난이도의 스테이지 선택창
 	$("#nextLevel").on("click", function(){
 		hidePage="#stage3Clear";
-		if($("#fashion").src == "neoguul.png"){
+		//if($("#fashion").src == "neoguul.png"){
+		if(failcheck==true){
 			if(Lv==1){
 				if(stage == 1){
-					PLAY_1(2);
+					failcheck=false;
+					PLAY_1(1);
 				}else if(stage ==2){
-					PLAY_1(3);
+					failcheck=false;
+					PLAY_1(2);
 				}else if(stage == 3){
+					failcheck=false;
 					PLAY_1(3);
 				}
 			}else if(Lv==2){
 				if(stage == 1){
-					PLAY_1(2);
+					failcheck=false;
+					PLAY_2(1);
 				}else if(stage ==2){
-					PLAY_1(3);
+					failcheck=false;
+					PLAY_2(2);
 				}else if(stage == 3){
-					PLAY_1(3);
+					failcheck=false;
+					PLAY_2(3);
 				}
 			}else if(Lv==3){
 				if(stage == 1){
-					PLAY_1(2);
+					failcheck=false;
+					PLAY_3(1);
 				}else if(stage ==2){
-					PLAY_1(3);
+					failcheck=false;
+					PLAY_3(2);
 				}else if(stage == 3){
-					PLAY_1(3);
+					failcheck=false;
+					PLAY_3(3);
 				}
 			}
 		}else{
 			if(Lv==1){
-				PLAY_2(1);
-				Lv=2;
-				stage=1;
+				if(stage==3){
+					if(openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>=7){
+						hidePage = "#stage3Clear";
+						showPage = "#MediumStory1-1";
+						move_to_NextPage();
+					}
+					else{
+						$("#stage3Clear>p").show().fadeOut(3000);
+					}
+				}
+				else{
+					if(stage==1){
+						Lv=1;
+						stage=2;
+						PLAY_1(2);
+					}
+					else if(stage==2){
+						Lv=1;
+						stage=3;
+						PLAY_1(3);
+					}
+				}
 			}else if(Lv==2){
-				PLAY_3(1);
-				Lv=2;
-				stage=1;
+				if(stage==3){
+					if(openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>=7){
+						hidePage = "#stage3Clear";
+						showPage = "#HardStory1-1";
+						move_to_NextPage();
+					}
+					else{
+						$("#stage3Clear>p").show().fadeOut(3000);
+					}
+				}
+				else{
+					if(stage==1){
+						Lv=2;
+						stage=2;
+						PLAY_2(2);
+					}
+					else if(stage==2){
+						PLAY_2(3);
+						Lv=2;
+						stage=3;
+					}
+				}
+			}else if(Lv==3){
+				if(stage==1){
+					Lv=2;
+					stage=2;
+					PLAY_2(2);
+				}
+				else if(stage==2){
+					Lv=2;
+					stage=3;
+					PLAY_2(3);
+				}			
 			}
 		}
 	});
@@ -507,25 +592,34 @@ $(document).ready(function(){
 	$("#noNextLevel").on("click", function(){
 		hidePage="#stage3Clear";
 		if(Lv==1){
+			failcheck=false;
 			showPage="#easyStagePage";
 		}
 		else if(Lv==2){
+			failcheck=false;
 			showPage="#mediumStagePage";
 		}
 		else if(Lv==3){
+			failcheck=false;
 			showPage="#hardStagePage"; 
 		}
 		move_to_NextPage();
 	});
 	//--------> 디자인
 	/*****환경설정*****/
-	$("#settings").on("click", function(){
+	$(".settings").on("click", function(){
 		hidePage = ".gamePage";
 		showPage = ".settingsPage";
 		PAUSE();
 		move_to_NextPage();
 	});
-	$(".settingsback").on("click", function() {
+	$(".settingsBack").mouseover(function(){
+		$(".settingsBack").attr("src", "goBackButton_mo.png");
+	});
+	$(".settingsBack").mouseout(function(){
+		$(".settingsBack").attr("src", "goBackButton_n.png");
+	});
+	$(".settingsBack").on("click", function() {
 		hidePage = ".settingsPage";
 		if(Lv==1){
 			if(stage==1){
@@ -668,7 +762,11 @@ function RESTART(){
 }
 function START(){
 	init();
+	STARSCORE = false;
+	STARCOREHIT = false;
+	STARTIMER = false;
 	delayTime = 3;
+	$(".gameStar").attr("src","resultStar0.png");
 	PLAY = setInterval(draw, 5);
 	TIME = setInterval(setTime, 1000);
 	GAMEDELAY = setInterval(delay, 1000);
@@ -712,7 +810,7 @@ function set_resultPage(){
 	}
 
 
-	if(x==3 || x == 2){
+	if(x>=1){
 		if(Lv==1&&stage==1){
 			if(openedStage[0][0]>=2){
 				$("#item").attr({"src": "sunglass 1.png", "height" : "120px"});
@@ -763,11 +861,10 @@ function set_resultPage(){
 			$("#starPrint").attr("src", "resultStar3.png");
 		}else if(x==2){
 			$("#starPrint").attr("src", "resultStar2.png");
+		}else if(x==1){
+			$("#starPrint").attr("src", "resultStar1.png");
 		}
 
-	}
-	else if(x==1){
-		$("#starPrint").attr("src", "resultStar1.png");
 	}
 	else if(x==0){
 		$("#starPrint").attr("src", "resultStar0.png");
@@ -776,8 +873,41 @@ function set_resultPage(){
 	$("#scorePrint").html("스코어: "+score);
 	$("#timePrint").html("남은 시간: "+timer);
 }
-
-
+function add_Star(){
+	if($(".gameStar").attr("src") == "resultStar0.png"){
+		$(".gameStar").attr("src", "resultStar1.png");
+	}else if($(".gameStar").attr("src") == "resultStar1.png"){
+		$(".gameStar").attr("src", "resultStar2.png");
+	}else if($(".gameStar").attr("src") == "resultStar2.png"){
+		$(".gameStar").attr("src", "resultStar3.png");
+	}
+}
+function StarTimer(){
+	if(timer>0 && !STARTIMER){
+		add_Star();
+		STARTIMER = true;
+	}
+}
+function StarCorehit(){
+	if(coreHit <= crHit && !STARCOREHIT){
+		add_Star();
+		STARCOREHIT = true;
+	}
+}
+function StarScore(){
+	if(Lv==1&&score>=scoreLV[0] && !STARSCORE){
+		add_Star();
+		STARSCORE = true;
+	}
+	if(Lv==2&&score>=scoreLV[1] && !STARSCORE){
+		add_Star();
+		STARSCORE = true;
+	}
+	if(Lv==3&&score>=scoreLV[2] && !STARSCORE){
+		add_Star();
+		STARSCORE = true;
+	}
+}
 //별 몇개 얻었는지 계산
 function judge_Star(){
 	star=0;
@@ -788,59 +918,77 @@ function judge_Star(){
 		star++;
 	}
 
-	if(openedStage[0][0]<star&&Lv==1&&stage==1){
-		if(score>=scoreLV1){
+	if(Lv==1&&stage==1){
+		if(score>=scoreLV[0]){
 			star++;
 		}
-		openedStage[0][0]=star;
+		if(openedStage[0][0]<star){
+			openedStage[0][0]=star;
+		}
 	}
-	else if(openedStage[0][1]<star&&Lv==1&&stage==2){
-		if(score>=scoreLV1){
+	else if(Lv==1&&stage==2){
+		if(score>=scoreLV[0]){
 			star++;
 		}
-		openedStage[0][1]=star;
+		if(openedStage[0][1]<star){
+			openedStage[0][1]=star;
+		}
 	}
-	else if(openedStage[0][2]<star&&Lv==1&&stage==3){
-		if(score>=scoreLV1){
+	else if(Lv==1&&stage==3){
+		if(score>=scoreLV[0]){
 			star++;
 		}
-		openedStage[0][2]=star;
+		if(openedStage[0][2]<star){
+			openedStage[0][2]=star;
+		}
 	}
-	else if(openedStage[1][0]<star&&Lv==2&&stage==1){
-		if(score>=scoreLV2){
+	else if(Lv==2&&stage==1){
+		if(score>=scoreLV[1]){
 			star++;
 		}
-		openedStage[1][0]=star;
+		if(openedStage[1][0]<star){
+			openedStage[1][0]=star;
+		}
 	}
-	else if(openedStage[1][1]<star&&Lv==2&&stage==2){
-		if(score>=scoreLV2){
+	else if(Lv==2&&stage==2){
+		if(score>=scoreLV[1]){
 			star++;
 		}
-		openedStage[1][1]=star;
+		if(openedStage[1][1]<star){
+			openedStage[1][1]=star;
+		}
 	}
-	else if(openedStage[1][2]<star&&Lv==2&&stage==3){
-		if(score>=scoreLV2){
+	else if(Lv==2&&stage==3){
+		if(score>=scoreLV[1]){
 			star++;
 		}
-		openedStage[1][2]=star;
+		if(openedStage[1][2]<star){
+			openedStage[1][2]=star;
+		}
 	}
-	else if(openedStage[2][0]<star&&Lv==3&&stage==1){
-		if(score>=scoreLV3){
+	else if(Lv==3&&stage==1){
+		if(score>=scoreLV[2]){
 			star++;
 		}
-		openedStage[2][0]=star;
+		if(openedStage[2][0]<star){
+			openedStage[2][0]=star;
+		}
 	}
-	else if(openedStage[2][1]<star&&Lv==3&&stage==2){
-		if(score>=scoreLV3){
+	else if(Lv==3&&stage==2){
+		if(score>=scoreLV[2]){
 			star++;
 		}
-		openedStage[2][1]=star;
+		if(openedStage[2][1]<star){
+			openedStage[2][1]=star;
+		}
 	}
-	else if(openedStage[2][2]<star&&Lv==3&&stage==3){
-		if(score>=scoreLV3){
+	else if(Lv==3&&stage==3){
+		if(score>=scoreLV[2]){
 			star++;
 		}
-		openedStage[2][2]=star;
+		if(openedStage[2][2]<star){
+			openedStage[2][2]=star;
+		}
 	}
 
 	return star;
@@ -855,7 +1003,7 @@ function set_stagePage(){
 			$("#easyStage2").attr("src", "Stage2Open.png");
 		}
 		else{
-			if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>=6)&&(openedStage[1][0]==-1)){
+			if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>=7)&&(openedStage[1][0]==-1)){
 				openedStage[1][0]=0;
 				$("#mediumStage1").attr("src", "Stage1Open.png");
 			}
@@ -878,7 +1026,7 @@ function set_stagePage(){
 			$("#easyStage3").attr("src", "Stage3Open.png");
 		}
 		else{
-			if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>=6)&&(openedStage[1][0]==-1)){
+			if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>=7)&&(openedStage[1][0]==-1)){
 				openedStage[1][0]=0;
 				$("#mediumStage1").attr("src", "Stage1Open.png");
 			}
@@ -896,7 +1044,7 @@ function set_stagePage(){
 	}
 
 	if(Lv==1&&stage==3){
-		if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>=6)&&(openedStage[1][0]==-1)){
+		if((openedStage[0][0]+openedStage[0][1]+openedStage[0][2]>=7)&&(openedStage[1][0]==-1)){
 			openedStage[1][0]=0;
 			$("#mediumStage1").attr("src", "Stage1Open.png");
 		}
@@ -918,7 +1066,7 @@ function set_stagePage(){
 			$("#mediumStage2").attr("src", "Stage2Open.png");
 		}
 		else{
-			if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>=6)&&(openedStage[2][0]==-1)){
+			if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>=7)&&(openedStage[2][0]==-1)){
 				openedStage[2][0]=0;
 				$("#hardStage1").attr("src", "Stage1Open.png");
 			}
@@ -941,7 +1089,7 @@ function set_stagePage(){
 			$("#mediumStage3").attr("src", "Stage3Open.png");
 		}
 		else{
-			if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>=6)&&(openedStage[2][0]==-1)){
+			if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>=7)&&(openedStage[2][0]==-1)){
 				openedStage[2][0]=0;
 				$("#hardStage1").attr("src", "Stage1Open.png");
 			}
@@ -959,7 +1107,7 @@ function set_stagePage(){
 	}
 
 	if(Lv==2&&stage==3){
-		if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>=6)&&(openedStage[2][0]==-1)){
+		if((openedStage[1][0]+openedStage[1][1]+openedStage[1][2]>=7)&&(openedStage[2][0]==-1)){
 			openedStage[2][0]=0;
 			$("#hardStage1").attr("src", "Stage1Open.png");
 		}
@@ -1030,16 +1178,19 @@ function set_stage3Clear(){
 	$(".wearItem").css("display","none");
 	if(Lv==1){
 		$("#stage3Clear .background").attr("src","easyFinBG.png");
-		if(openedStage[0][0]>=2||openedStage[0][1]>=2||openedStage[0][2]>=2){
+		if((openedStage[0][0]>=1||openedStage[0][1]>=1||openedStage[0][2]>=1)&&failcheck==false){
 			$("#fashion").attr("src","boy 1.png");
-			$("#stage3Clear .A").attr("src","finNaA.png");
-			if(openedStage[0][0]>=2){
+			$("#nextLevel").html("다음 단계 플레이하기");
+			if(openedStage[0][0]>=1){
+				$("#stage3Clear .A").attr("src","easy-1-Na.png");
 				$("#item-1-1").css("display","block");
 			}
-			if(openedStage[0][1]>=2){
+			if(openedStage[0][1]>=1){
+				$("#stage3Clear .A").attr("src","easy-2-Na.png");
 				$("#item-1-2").css("display","block");
 			}
-			if(openedStage[0][2]>=2){
+			if(openedStage[0][2]>=1){
+				$("#stage3Clear .A").attr("src","easy-3-Na.png");
 				$("#item-1-3").css("display","block");
 			}
 		}
@@ -1051,16 +1202,19 @@ function set_stage3Clear(){
 	}
 	else if(Lv==2){
 		$("#stage3Clear .background").attr("src","mediumFinBG.png");
-		if(openedStage[1][0]>=2||openedStage[1][1]>=2||openedStage[1][2]>=2){
+		if((openedStage[1][0]>=1||openedStage[1][1]>=1||openedStage[1][2]>=1)&&failcheck==false){
 			$("#fashion").attr("src","boy 1.png");
-			$("#stage3Clear .A").attr("src","finNaA.png");
-			if(openedStage[1][0]>=2){
+			$("#nextLevel").html("다음 단계 플레이하기");
+			if(openedStage[1][0]>=1){
+				$("#stage3Clear .A").attr("src","medium-1-Na.png");
 				$("#item-2-1").css("display","block");
 			}
-			if(openedStage[1][1]>=2){
+			if(openedStage[1][1]>=1){
+				$("#stage3Clear .A").attr("src","medium-2-Na.png");
 				$("#item-2-2").css("display","block");
 			}
-			if(openedStage[1][2]>=2){
+			if(openedStage[1][2]>=1){
+				$("#stage3Clear .A").attr("src","medium-3-Na.png");
 				$("#item-2-3").css("display","block");
 			}
 		}else{
@@ -1071,17 +1225,19 @@ function set_stage3Clear(){
 	}
 	else if(Lv==3){
 		$("#stage3Clear .background").attr("src","hardFinBG.png");
-		if(openedStage[2][0]>=2||openedStage[2][1]>=2||openedStage[2][2]>=2){
+		if((openedStage[2][0]>=1||openedStage[2][1]>=1||openedStage[2][2]>=1)&&failcheck==false){
 			$("#fashion").attr("src","boy 1.png");
 			$("#nextLevel").html("");
-			$("#stage3Clear .A").attr("src","finNaA.png");
-			if(openedStage[2][0]>=2){
+			if(openedStage[2][0]>=1){
+				$("#stage3Clear .A").attr("src","hard-1-Na.png");
 				$("#item-3-1").css("display","block");
 			}
-			if(openedStage[2][1]>=2){
+			if(openedStage[2][1]>=1){
+				$("#stage3Clear .A").attr("src","hard-1-Na.png");
 				$("#item-3-2").css("display","block");
 			}
-			if(openedStage[2][2]>=2){
+			if(openedStage[2][2]>=1){
+				$("#stage3Clear .A").attr("src","hard-1-Na.png");
 				$("#item-3-3").css("display","block");
 			}
 		}else{
@@ -1136,6 +1292,11 @@ function draw() {
 	drawCeiling();
 	drawTimenScore();
 	ballReflection();
+
+	StarScore();
+	StarTimer();
+	StarCorehit();
+
 	if (delayTime == 0) {
 		ballX += velocity*vector[0];
 		ballY += velocity*vector[1];
@@ -1145,11 +1306,11 @@ function draw() {
 		endPlay("#resultPage");
 	}
 	if(coreHit <= crHit){
-		if(stage==1 && score >= scoreLV1){
+		if(Lv==1 && score >= scoreLV[0]){
 			endPlay("#resultPage");
-		}else if(stage==2 && score >= scoreLV2){
+		}else if(Lv==2 && score >= scoreLV[1]){
 			endPlay("#resultPage");
-		}else if(stage==3 && score >= scoreLV3){
+		}else if(Lv==3 && score >= scoreLV[2]){
 			endPlay("#resultPage");
 		}
 	}
@@ -1216,6 +1377,12 @@ function brickReflection() {
 		else if(bricks[row][col] == -3){
 			crHit += 1;
 			score += 5;
+			if (crHit == coreHit) {
+				bricks[0][COLS/2] = 0;
+				bricks[0][COLS/2 - 1] = 0;
+				bricks[1][COLS/2] = 0;
+				bricks[1][COLS/2 - 1] = 0;
+			}
 		}
 	}
 
@@ -1257,6 +1424,12 @@ function brickReflection() {
 		else if(bricks[row][col] == -3){
 			crHit += 1;
 			score += 5;
+			if (crHit == coreHit) {
+				bricks[0][COLS/2] = 0;
+				bricks[0][COLS/2 - 1] = 0;
+				bricks[1][COLS/2] = 0;
+				bricks[1][COLS/2 - 1] = 0;
+			}
 		}
 	}
 }
@@ -1291,11 +1464,10 @@ function delay() {
 function endPlay(sp){
 	audio.pause();
 
-	set_resultPage();
-
 	hidePage= ".gamePage";
 	showPage = sp;
 	if(showPage == "#resultPage"){
+		set_resultPage();
 		audio.src="success.mp3";
 	}else if (showPage == "#failPage"){
 		audio.src="fail.mp3";
@@ -1314,20 +1486,26 @@ function setTime(){
 	}
 }
 function drawTimenScore(){
-	context.drawImage(scoreimg,cWidth - 200 ,cHeight - 800, 200, 150);
+	context.drawImage(scoreimg,cWidth - 200 ,cHeight - 775, 200, 150);
 	context.font = "40px KoreanSDNRM";
 	context.fillStyle = "#FEED9F";
 	context.textAlign = "center";
-	context.fillText(score, cWidth - 102 ,cHeight - 700);
-	context.font = "40px KoreanSDNRM";
+	context.fillText(score + "/" + scoreLV[Lv-1], cWidth - 102 ,cHeight - 675);
+	context.font = "70px KoreanSDNRM";
 	context.fillStyle = "#FEED9F";
 	context.textAlign = "center";
 	var min = Math.floor(timer/60);
-	context.fillText(min+" : "+String(timer%60).padStart(2,'0'), cWidth - 550 ,cHeight - 700);
+	context.fillText(min+" : "+String(timer%60).padStart(2,'0'), cWidth - 700 ,cHeight - 687);
 	if (delayTime > 0) {
 		context.font = "80px Georgia";
 		context.fillStyle = "white";
-		context.fillText(delayTime, cWidth/2 - 20, cHeight/2 - 50);
+		context.fillText(delayTime, cWidth/2, cHeight/2 +30);
+	}
+	if (crHit < coreHit) {
+		context.font = "40px KoreanSDNRM";
+		context.fillStyle = "#FEED9F";
+		context.textAlign = "center";
+		context.fillText(crHit + "/" + coreHit , cWidth/2 , 150);
 	}
 }
 function init_drawBall(rad) {
@@ -1341,14 +1519,28 @@ function drawBall(){
 }
 function init_drawBar(width){
 	bWidth = width;
-	bHeight = 10;
+	bHeight = 20;
 	bStart = cWidth/2;
 }
 function drawBar(){
-	context.fillStyle = barcolor;
-	context.beginPath();
-	context.roundRect(bStart, cHeight- bHeight, bWidth, bHeight);
-
+	roundRect(bStart, cHeight- bHeight, bWidth, bHeight, 10);
+}
+function roundRect(x, y, width, height, radius) {
+  var r = x + width;
+  var b = y + height;
+  context.beginPath();
+  context.fillStyle = barcolor;
+  context.moveTo(x+radius, y);
+  context.lineTo(r-radius, y);
+  context.quadraticCurveTo(r, y, r, y+radius);
+  context.lineTo(r, b-radius);
+  context.quadraticCurveTo(r, b, r-radius, b);
+  context.lineTo(x+radius, b);
+  context.quadraticCurveTo(x, b, x, b-radius);
+  context.lineTo(x, y+radius);
+  context.quadraticCurveTo(x, y, x+radius, y);
+  context.stroke();
+  context.fill();
 }
 function drawCeiling(){
 	context.fillStyle = "#837156";
@@ -1533,13 +1725,15 @@ function drawBrick(){
 			}else if(bricks[i][j] == 1){
 				context.drawImage(brick1, w+j*bricWidth, h+i*bricHeight,  bricWidth - bricPadding, bricHeight - bricPadding);
 			}else if(bricks[i][j] == -1){
-				context.drawImage(present, w+j*bricWidth, h+i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
+				context.drawImage(scorebrick, w+j*bricWidth, h+i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
 			}else if(bricks[i][j] == -2){
-				context.drawImage(present, w+j*bricWidth, h+i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
+				context.drawImage(deburfbrick, w+j*bricWidth, h+i*bricHeight, bricWidth - bricPadding, bricHeight - bricPadding);
 			}
 		}
 	}
 
-	context.drawImage(corebrick, w+(COLS/2-1)*bricWidth, h, bricWidth*2 - bricPadding, bricHeight*2 - bricPadding);
+	if (crHit < coreHit) {
+		context.drawImage(corebrick, w+(COLS/2-1)*bricWidth, h, bricWidth*2 - bricPadding, bricHeight*2 - bricPadding);
+	}
 
 }
