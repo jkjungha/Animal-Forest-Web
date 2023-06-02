@@ -79,9 +79,6 @@ $(document).ready(function(){
 	/**********시작화면************/
 	/*****************************/
 
-	$("video").on("click",function(){
-		$("video").prop("muted", false);
-	});
 
 	$("#methodButton").on("click",function(){
 		hidePage= "#startPage";
@@ -101,6 +98,7 @@ $(document).ready(function(){
 	$(".startButton").on("click",function(){
 		hidePage= ".page";
 		showPage = "#levelPage";
+		$("video").prop("muted", false);
 		move_to_NextPage();
 	});
 	$(".startButton").mouseover(function(){
