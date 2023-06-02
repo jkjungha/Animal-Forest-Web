@@ -98,7 +98,9 @@ $(document).ready(function(){
 	$(".startButton").on("click",function(){
 		hidePage= ".page";
 		showPage = "#levelPage";
-		$("video").prop("muted", false);
+		if(AUDIO){
+			$("video").prop("muted", false);
+		}
 		move_to_NextPage();
 	});
 	$(".startButton").mouseover(function(){
@@ -463,8 +465,8 @@ $(document).ready(function(){
 		//}
 		if(AUDIO){
 			audio.pause();
-		}
-		$("video").prop("muted", false);
+			$("video").prop("muted", false);
+		}Ï
 		move_to_NextPage();
 	});
 	$("#ok_clearButton").mouseover(function(){
@@ -482,8 +484,8 @@ $(document).ready(function(){
 		showPage="#stage3Clear";
 		if(AUDIO){
 			audio.pause();
+			$("video").prop("muted", false);
 		}
-		$("video").prop("muted", false);
 		move_to_NextPage();
 	});
 	$("#ok_failButton").mouseover(function(){
