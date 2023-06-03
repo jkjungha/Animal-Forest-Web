@@ -65,8 +65,6 @@ var deburfbrick = new Image();
 deburfbrick.src = "./img/deburfbrick.png";
 var ball = new Image();
 ball.src = "./img/peach.png";
-var ceiling = new Image();
-ceiling.src = "";
 var scoreimg = new Image();
 scoreimg.src = "./img/score.png";
 var settings = new Image();
@@ -157,10 +155,10 @@ $(document).ready(function(){
 		move_to_NextPage();
 	});
 	$(".goBackButton").mouseover(function(){
-		$(".goBackButton").attr("src", "goBackButton_mo.png");
+		$(".goBackButton").attr("src", "./img/goBackButton_mo.png");
 	});
 	$(".goBackButton").mouseout(function(){
-		$(".goBackButton").attr("src", "goBackButton_n.png");
+		$(".goBackButton").attr("src", "./img/goBackButton_n.png");
 	});
 	$(".goToStart").on("click", function(){
 		hidePage= "#levelPage";
