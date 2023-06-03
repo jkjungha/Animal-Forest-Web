@@ -11,7 +11,7 @@ img {border: 0;}
 
 @font-face {
     font-family: "sindinaru";
-    src: url("sindinaruM.ttf") format('truetype');
+    src: url("./img/sindinaruM.ttf") format('truetype');
 }
 .page{
     position: relative;
