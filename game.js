@@ -462,7 +462,7 @@ $(document).ready(function(){
 		if(AUDIO){
 			audio.pause();
 			$("video").prop("muted", false);
-		}Ï
+		}
 		move_to_NextPage();
 	});
 	$("#ok_clearButton").mouseover(function(){
