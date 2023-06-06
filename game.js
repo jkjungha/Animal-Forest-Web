@@ -8,7 +8,7 @@ var star=0;
 var Lv=0;
 var stage=0;
 
-var openedStage = [[0,-1,-1],[-1,-1,-1],[-1,-1,-1]];
+var openedStage = [[0,-1,-1],[0,-1,-1],[0,-1,-1]];
 var scoreLV = [400, 800, 1200];
 
 var failcheck = false;
